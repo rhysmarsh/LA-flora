@@ -1,0 +1,2 @@
+# Redirect www to apex (if using custom domain)
+# https://www.laplants.org/* https://laplants.org/:splat 301
