@@ -4,7 +4,7 @@
 
 A comprehensive self-contained PWA field guide to the flora of Los Angeles County, California — from coastal salt marsh to 10,000 ft alpine, Mojave Desert to Channel Islands fog zone.
 
-**[Live site →](https://laplants.org)**
+**[Live site →](https://la-flora.org)**
 
 ## Stats
 
@@ -23,14 +23,14 @@ A comprehensive self-contained PWA field guide to the flora of Los Angeles Count
 | **Total** | **730** |
 
 - **636 native** · 82 introduced (with Cal-IPC ratings)
-- **150 families** represented
+- **150 families** represented, sortable by APG IV phylogenetic order
 - **55 lichens** (field-identifiable — no microscopy/reagents required)
 - **26 mosses** (field-identifiable by growth form and habitat)
-- **19 lupines** · 11 dudleyas · 9 manzanitas · 9 sages · 9 oaks · 9 ceanothus
+- **50 species** tagged as endemic (CA, SoCal, Channel Islands, CA/Baja)
 - **131 species** tagged with fire ecology
 - **78 species** with ecological associations (pollinator/host plant data)
-- **50 species** tagged as endemic (CA, SoCal, Channel Islands)
 - **43 Cal-IPC rated invasives** (15 High, 22 Moderate, 6 Limited)
+- **19 lupines** · 11 dudleyas · 9 manzanitas · 9 sages · 9 oaks · 9 ceanothus
 - **10 confusable species pairs** with bidirectional `vs` field marks
 
 ## Features
@@ -41,12 +41,17 @@ A comprehensive self-contained PWA field guide to the flora of Los Angeles Count
 - **Cal-IPC invasive badges** — red (High), orange (Moderate), gray (Limited) on species cards
 - **Endemic badges** — navy (CA), purple (SoCal), teal (Channel Islands)
 - **Duration badges** — orange (annual), amber (biennial), green (perennial)
-- **Status filtering** — common, uncommon, rare, endangered
-- **Endemic filter** — show only endemic species
+- **Conservation badges** — CNPS rare plant ranks, federal/state listings with detailed notes
+- **Life list tracking** — enter your iNat username to see which LA County species you've observed, with per-taxon progress bars
+- **Collapsible family chips** — family filter with species counts, zero-count auto-hide, A→Z / APG IV sort toggle synced to photo grid order
+- **Status/Observed/Endemic filter chips** — filter by conservation status, life list observation, or endemic range
 - **Cross-taxon search** — search any species name from any tab, with "Also found in" links
 - **Phenology bars** — bloom period with peak months highlighted
-- **Fire ecology** — tagged in species detail cards
+- **Fire ecology** — fire response tagged in species detail cards
 - **Ecological associations** — pollinator and host plant relationships
+- **vs field marks** — bidirectional differentiation notes for confusable species pairs
+- **Alias-aware life list** — handles iNat reclassifications with bidirectional NAME_ALIASES
+- **iOS edge-to-edge** — respects safe area insets on notched devices
 
 ## Architecture
 
@@ -54,7 +59,7 @@ Self-contained single HTML file (~430 KB). All species data, CSS, and JS inlined
 
 - Photos: fetched from iNat `/taxa/autocomplete`, cached in IndexedDB (`plantGuidePhotos`)
 - Life list: iNat `species_counts` API with place_id=962 (LA County)
-- Maps: ESRI satellite tiles + iNat observation overlay
+- Maps: ESRI satellite tiles + iNat observation overlay, bounds [[33.70,-118.95],[34.82,-117.65]]
 - Fonts: EB Garamond (serif) + DM Sans (sans-serif) via Google Fonts
 - Branding: dark forest green `#1A3C35`, muted gold `#BFA46E`, warm cream `#FAF8F4`
 
@@ -71,8 +76,6 @@ This guide was compiled from the following authoritative references:
 - Mistretta, *Field Guide to the Flora of the San Gabriel Mountains* (CalBG, 2020)
 - Sholars, *Lupines of California* (CNPS Press)
 - Strong & Chester, *Geographic Distribution of Arctostaphylos Species in the SGM*
-- Theodore Payne Foundation High Desert Plant Database
-- Las Pilitas Nursery LA Native Plant Reference
 - McAuley, *Wildflowers of the Santa Monica Mountains*
 
 **Lichens**
@@ -89,7 +92,7 @@ This guide was compiled from the following authoritative references:
 - iNat Bryophytes of Southern California project (Chris Wagner, UCR)
 
 **Invasive Species**
-- Cal-IPC, *California Invasive Plant Inventory* (2006-2024)
+- Cal-IPC, *California Invasive Plant Inventory* (2006–2024)
 
 **General Reference**
 - Jepson eFlora (ucjeps.berkeley.edu)
@@ -97,11 +100,13 @@ This guide was compiled from the following authoritative references:
 - CNPS Rare Plant Inventory
 - Xerces Society California Pollinator Plant List
 - Calscape (calscape.org)
+- Theodore Payne Foundation Native Plant Database
+- Las Pilitas Nursery LA Native Plant Reference
 - iNaturalist (inaturalist.org)
 
 ## Deployment
 
-The `la-plant-guide-deploy.zip` contains everything needed for Netlify drag-and-drop deployment:
+The deploy zip contains everything needed for Netlify drag-and-drop deployment:
 
 ```
 index.html          # Complete self-contained PWA
@@ -110,9 +115,11 @@ manifest.json       # PWA manifest
 _headers            # Cache control + security headers
 _redirects          # Netlify redirect rules
 icons/              # App icons (SVG primary, PNG fallback)
+LICENSE             # GPL v3 + disclaimer
+README.md           # This file
 ```
 
-Canonical URL: `https://laplants.org`
+Canonical URL: `https://la-flora.org`
 
 ## Species Data Schema
 
@@ -121,15 +128,16 @@ Canonical URL: `https://laplants.org`
   id: 'wil_0001',               // Unique identifier
   cn: 'California Poppy',       // Common name
   sn: 'Eschscholzia californica', // Scientific name (iNat-compatible)
-  fam: 'Papaveraceae',          // Family
+  fam: 'Papaveraceae',          // Family — must match familyColors key
   st: 'common',                 // Status: common|uncommon|rare|endangered
-  dur: 'annual',                // Duration/growth form
+  dur: 'annual',                // Duration: annual|biennial|perennial
   end: 'CA',                    // Endemic: CA|SoCal|Channel Islands|CA/Baja
-  desc: '...',                  // Description (70-240 chars)
+  ipc: 'High',                  // Cal-IPC rating: High|Moderate|Limited
+  desc: '...',                  // Description (70–240 chars)
   elev: 'low,foot',             // Elevation: coast|low|foot|mid|high
-  mo: [2,3,4,5,6,7],           // Bloom/active months
+  mo: [2,3,4,5,6,7],            // Bloom/active months (1–12)
   pk: [3,4,5],                  // Peak months (subset of mo)
-  fm: {                         // Field marks
+  fm: {                         // Field marks (key-value pairs)
     Height: '...',
     Color: '...',
     Habitat: '...',
@@ -138,11 +146,12 @@ Canonical URL: `https://laplants.org`
     Fire: '...',                // Fire ecology
   },
   hp: '...',                    // Ecological associations
-  intro: true,                  // Introduced (non-native) flag
-  ipc: 'High',                 // Cal-IPC rating: High|Moderate|Limited
-  ssp: true,                   // Subspecies (excluded from counts)
+  intro: true,                  // Non-native flag (optional)
+  ssp: true,                    // Subspecies — excluded from headline counts (optional)
 }
 ```
+
+Species in `INTRO_SET` are displayed with a ✦ marker. Species with Cal-IPC ratings receive color-coded invasive badges.
 
 ## Contributing
 
@@ -150,8 +159,22 @@ Species additions, corrections, and field mark improvements are welcome. Priorit
 
 - **SGM subregional floras** — Mt. Wilson Trail (295 taxa), Placerita Canyon (331 taxa) still have deeper species to extract
 - **Moss/lichen verification** — 4 lichens marked unverified; lichenologist/bryologist review welcome
-- **Ecological associations** — 78/730 species have `hp` data; could expand to 200+ connecting plants to invertebrate guide
+- **Ecological associations** — 78/730 species have `hp` data; could expand to 200+ connecting plants to the companion [LA County Invertebrate Guide](https://labugs.org)
 - **Photo fetch accuracy** — large genera (Calochortus, Quercus, Pinus, Salvia) need manual verification of iNat photo results
+- **vs field marks** — expand confusable species pairs beyond current 10
+- **Fire ecology** — 131/730 species tagged; many more chaparral species need fire response data
+
+### Pre-Publish Audit Checklist
+
+- [ ] 0 duplicate scientific names
+- [ ] 0 missing required fields (id, cn, sn, fam, st, desc, mo, elev)
+- [ ] 0 missing family colors for any family in species data
+- [ ] Peak months (pk) are subset of active months (mo)
+- [ ] INTRO_SET consistent with species `intro` flags
+- [ ] Even backtick count in JS
+- [ ] JS validates via `new Function(script)`
+- [ ] Version synced across `<title>`, header `<span>`, and SW cache name
+- [ ] Disclaimer present in footer and meta description
 
 ## License
 
