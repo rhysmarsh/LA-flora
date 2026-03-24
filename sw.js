@@ -1,4 +1,4 @@
-const CACHE_NAME = 'la-plant-guide-v2.023';
+const CACHE_NAME = 'la-plant-guide-v2.024';
 const PHOTO_CACHE = 'la-plant-photos-v1';
 const INAT_CACHE = 'la-plant-inat-v1';
 const APP_SHELL = ['/', '/index.html', '/manifest.json',
