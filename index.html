@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<title>LA County Plant, Moss & Lichen Field Guide — v2.025</title>
+<title>LA County Plant, Moss & Lichen Field Guide — v2.026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -154,6 +154,19 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 .ds-hp{margin:10px 0;padding:8px 10px;background:#f0ebe3;border-radius:6px;border-left:3px solid var(--green-ok)}
 .ds-hp-label{font-size:10px;font-weight:600;color:var(--forest);margin-bottom:3px;font-family:var(--fh)}
 .ds-hp-list{font-size:11px;color:#555;line-height:1.5}
+/* Subspecies pip on grid card */
+.ssp-pip{position:absolute;bottom:34px;right:6px;background:rgba(26,60,53,0.72);color:rgba(255,255,255,0.92);font-size:8px;font-weight:700;padding:2px 6px;border-radius:6px;letter-spacing:0.04em;pointer-events:none;z-index:3}
+/* Subspecies section in detail sheet */
+.ds-ssp-section{margin:0 0 14px;padding:8px 10px;background:#f7f3ed;border-radius:6px;border-left:3px solid var(--gold)}
+.ds-ssp-label{font-size:10px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--forest);margin-bottom:6px}
+.ds-ssp-row{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid #e8e0d4;font-size:11px}
+.ds-ssp-row:last-child{border-bottom:none}
+.ds-ssp-obs .ds-ssp-dot{color:var(--green-ok);font-weight:700;font-size:12px}
+.ds-ssp-dot{width:14px;text-align:center;color:#ccc;flex-shrink:0}
+.ds-ssp-names{display:flex;flex-direction:column;gap:1px;flex:1;min-width:0}
+.ds-ssp-cn{font-weight:600;color:#333;font-size:11px}
+.ds-ssp-sn{font-style:italic;color:#888;font-family:var(--fd);font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ds-ssp-st{font-size:9px;font-weight:600;flex-shrink:0}
 </style>
 <meta name="description" content="A free, open-source field guide to 1,000+ plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.">
 <link rel="canonical" href="https://laplants.org/">
@@ -167,7 +180,7 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <meta name="twitter:description" content="Free open-source field guide to 1,000+ plants, mosses and lichens of LA County. Photos, field marks, bloom times, maps.">
 <meta name="description" content="LA County Plant, Moss &amp; Lichen Field Guide — for informational purposes only. Not a substitute for professional identification."></head>
 <body>
-<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v2.025</span></h1><p class="sub" id="hSub">749 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
+<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v2.026</span></h1><p class="sub" id="hSub">749 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
 <nav class="tbar" id="tBar"></nav>
 <main class="cnt">
 <div class="llb" id="llBar"></div>
@@ -291,7 +304,7 @@ ppq();}
 async function fetchLL(){if(!state.inatUsername)return;state.lifeListLoading=true;rLL();
 const res={};const idMap={};for(const k of TAXA_ORDER){const tid=TAXA[k].iNatTaxonId;if(!idMap[tid])idMap[tid]=[];idMap[tid].push(k);}
 for(const[tid,taxa]of Object.entries(idMap)){
-try{const r=await fetch(`https://api.inaturalist.org/v1/observations/species_counts?user_id=${encodeURIComponent(state.inatUsername)}&place_id=962&taxon_id=${tid}&per_page=500`);
+try{const r=await fetch(`https://api.inaturalist.org/v1/observations/species_counts?user_id=${encodeURIComponent(state.inatUsername)}&place_id=962&taxon_id=${tid}&captive=false&verifiable=true&per_page=500`);
 const d=await r.json();const ids=new Set(),names=new Set();
 for(const x of(d.results||[])){if(x.taxon?.id)ids.add(x.taxon.id);if(x.taxon?.name)names.add(x.taxon.name.toLowerCase());}
 for(const k of taxa)res[k]={ids,names};}catch{for(const k of taxa)res[k]={ids:new Set(),names:new Set()};}}
@@ -301,7 +314,10 @@ function isO(sp,taxon){const d=state.lifeListData[taxon||state.activeTaxon];if(!
 
 function sC(){const c={};for(const k of TAXA_ORDER)c[k]=(SPECIES_DATA[k]||[]).filter(sp=>!sp.ssp).length;return c;}
 function sspC(k){return(SPECIES_DATA[k]||[]).filter(sp=>sp.ssp).length;}
-function lC(){const c={};for(const k of TAXA_ORDER){const d=state.lifeListData[k];if(!d){c[k]=0;continue;}let n=0;for(const sp of(SPECIES_DATA[k]||[])){if(sp.ssp)continue;if(isO(sp,k))n++;}c[k]=n;}return c;}
+function lC(){const c={};for(const k of TAXA_ORDER){const d=state.lifeListData[k];if(!d){c[k]=0;continue;}let n=0;
+// Build ssp observed lookup: parentBinomial -> bool
+const sspObs={};for(const sp of(SPECIES_DATA[k]||[])){if(sp.ssp&&isO(sp,k)){const pb=sp.sn.split(' ').slice(0,2).join(' ');sspObs[pb]=true;}}
+for(const sp of(SPECIES_DATA[k]||[])){if(sp.ssp)continue;if(isO(sp,k)||sspObs[sp.sn])n++;}c[k]=n;}return c;}
 
 function fmtN(n){return n.toLocaleString();}
 function rSub(){const t=TAXA_ORDER.reduce((a,k)=>a+(SPECIES_DATA[k]||[]).length,0);const ssp=TAXA_ORDER.reduce((a,k)=>a+sspC(k),0);document.getElementById('hSub').textContent=ssp>0?`${fmtN(t-ssp)} species + ${ssp} varieties across ${TAXA_ORDER.length} taxa groups`:`${fmtN(t)} species across ${TAXA_ORDER.length} taxa groups`;}
@@ -368,8 +384,15 @@ function rSp(){const cont=document.getElementById('spCont');
 let list=SPECIES_DATA[state.activeTaxon]||[];
 if(state.statusFilter)list=list.filter(s=>s.st===state.statusFilter);
 if(state.familyFilter)list=list.filter(s=>s.fam===state.familyFilter);
-if(state.observedFilter==='observed')list=list.filter(s=>isO(s));
-if(state.observedFilter==='unobserved')list=list.filter(s=>!isO(s));
+// Build ssp map before observed filter (ssp obs cascades to parent)
+const sspMap={};
+for(const sp of(SPECIES_DATA[state.activeTaxon]||[])){
+  if(sp.ssp){const pb=sp.sn.split(' ').slice(0,2).join(' ');if(!sspMap[pb])sspMap[pb]=[];sspMap[pb].push(sp);}
+}
+// Helper: is a parent species or any of its ssp observed?
+const isOParent=(sp)=>isO(sp)||(sspMap[sp.sn]||[]).some(s=>isO(s));
+if(state.observedFilter==='observed')list=list.filter(s=>s.ssp?isO(s):isOParent(s));
+if(state.observedFilter==='unobserved')list=list.filter(s=>s.ssp?!isO(s):!isOParent(s));
 if(state.endemicFilter==='endemic')list=list.filter(s=>!!s.end);
 if(state.endemicFilter==='non-endemic')list=list.filter(s=>!s.end);
 let xtrHtml='';
@@ -381,20 +404,26 @@ for(const k of TAXA_ORDER){if(k===state.activeTaxon)continue;
 const matches=(SPECIES_DATA[k]||[]).filter(s=>s.cn.toLowerCase().includes(q)||s.sn.toLowerCase().includes(q));
 if(matches.length)otherMatches.push({taxon:k,count:matches.length,emoji:TAXA[k].emoji,label:TAXA[k].label});}
 if(otherMatches.length){xtrHtml=`<div class="xtr">Also found in: ${otherMatches.map(m=>`<button onclick="saveT('${m.taxon}');render()" style="background:none;border:none;color:var(--forest);font-weight:600;text-decoration:underline;cursor:pointer;font-size:11px">${m.emoji} ${m.label} (${m.count})</button>`).join(' · ')}</div>`;}}
-if(!list.length&&!xtrHtml){cont.innerHTML=`<div class="es">No species match your filters.</div>`;return;}
-if(!list.length&&xtrHtml){cont.innerHTML=xtrHtml+`<div class="es">No matches in ${TAXA[state.activeTaxon].label}.</div>`;return;}
+// Suppress standalone ssp cards — they render bundled on parent
+const mainList=list.filter(s=>!s.ssp);
+if(!mainList.length&&!xtrHtml){cont.innerHTML=`<div class="es">No species match your filters.</div>`;return;}
+if(!mainList.length&&xtrHtml){cont.innerHTML=xtrHtml+`<div class="es">No matches in ${TAXA[state.activeTaxon].label}.</div>`;return;}
 const tc=TAXA[state.activeTaxon],groups={};
-for(const sp of list){if(!groups[sp.fam])groups[sp.fam]=[];groups[sp.fam].push(sp);}
+for(const sp of mainList){if(!groups[sp.fam])groups[sp.fam]=[];groups[sp.fam].push(sp);}
 let html=xtrHtml;
 for(const[fam,spp]of Object.entries(groups).sort((a,b)=>state.famSort==="apg"?((APG_IDX[a[0]]??999)-(APG_IDX[b[0]]??999)):a[0].localeCompare(b[0]))){
 const fc=tc.familyColors[fam]||'#999';
 html+=`<div class="fg"><div class="fgt" style="color:${fc};border-bottom:2px solid ${fc}30">${fam}<span class="fgc">(${spp.length})</span></div><div class="sg">`;
-for(const sp of spp){const obs=isO(sp),ca=state.photoCache[sp.sn];
+for(const sp of spp){
+const ssps=sspMap[sp.sn]||[];
+const obs=isOParent(sp);
+const ca=state.photoCache[sp.sn];
 const ps=ca&&ca.url?`background:url(${ca.url}) center/cover no-repeat`:`background:linear-gradient(135deg,${fc}22,${fc}44)`;
 const pip=STATUS_PIP[sp.st];const isIntro=INTRO_SET.has(sp.sn)||INTRO_SET.has(sp.sn.split(' ').slice(0,2).join(' '));
+const sspPip=ssps.length>0?`<div class="ssp-pip">${ssps.length} ssp</div>`:'';
 html+=`<div class="sc" style="border-left-color:${fc}" data-sid="${sp.id}">${obs?`<div class="ob">✓</div>`:''}${pip?`<div class="st-pip" style="background:${pip.bg};color:${pip.text}"><span class="st-dot" style="background:${pip.dot}"></span>${pip.label}</div>`:''}
 <div class="cp" style="${ps}">${!ca||!ca.url?`<div class="ep">${tc.emoji}</div>`:''}</div>
-<div class="cb"><div class="ccn">${sp.cn}</div><div class="csn">${sp.sn}${isIntro?'<span class="intro-mark"> ✦</span>':''}</div></div></div>`;}
+${sspPip}<div class="cb"><div class="ccn">${sp.cn}</div><div class="csn">${sp.sn}${isIntro?'<span class="intro-mark"> ✦</span>':''}</div></div></div>`;}
 html+=`</div></div>`;}
 cont.innerHTML=html;aL();ep(list,true);}
 
@@ -431,7 +460,11 @@ const tc=TAXA[state.activeTaxon],fc=tc.familyColors[sp.fam]||'#999',ca=state.pho
 const tid=state.resolvedTids[sp.sn]||'';
 const mapUrl=tid?`https://www.inaturalist.org/observations?place_id=${tc.placeId}&subview=map&taxon_id=${tid}`:`https://www.inaturalist.org/observations?place_id=${tc.placeId}&subview=map&taxon_name=${encodeURIComponent(sp.sn)}`;
 const ps=ca&&ca.url?`background:url(${ca.url}) center/cover no-repeat`:`background:linear-gradient(135deg,${fc}22,${fc}44)`;
-const obs=isO(sp);
+// Collect subspecies for this parent
+const ssps=(SPECIES_DATA[state.activeTaxon]||[]).filter(s=>s.ssp&&s.sn.startsWith(sp.sn.split(' ').slice(0,2).join(' ')+' '));
+const obs=isO(sp)||ssps.some(s=>isO(s));
+// Subspecies section HTML
+const sspSectionHtml=ssps.length>0?`<div class="ds-ssp-section"><div class="ds-ssp-label">Subspecies (${ssps.length})</div>${ssps.map(s=>{const o=isO(s);return`<div class="ds-ssp-row${o?' ds-ssp-obs':''}"><span class="ds-ssp-dot">${o?'✓':''}</span><div class="ds-ssp-names"><span class="ds-ssp-cn">${s.cn}</span><span class="ds-ssp-sn">${s.sn}</span></div>${s.st&&s.st!==sp.st?`<span class="ds-ssp-st" style="color:${(STATUS[s.st]||{}).color||'#999'}">${(STATUS[s.st]||{}).label||s.st}</span>`:''}</div>`;}).join('')}</div>`:'';
 let h=`<div class="ds-ovr" id="dsOvr"><div class="ds-sheet" id="dsSheet">
 <div class="ds-handle"></div>
 <div class="ds-photo" style="${ps}">${!ca||!ca.url?`<div class="ds-ep">${tc.emoji}</div>`:''}${obs?`<div class="ob" style="top:12px;right:12px;width:26px;height:26px;font-size:14px">✓</div>`:''}</div>
@@ -441,7 +474,7 @@ let h=`<div class="ds-ovr" id="dsOvr"><div class="ds-sheet" id="dsSheet">
 <div class="ds-fam"><span class="ds-fd" style="background:${fc}"></span>${sp.fam}${(INTRO_SET.has(sp.sn)||INTRO_SET.has(sp.sn.split(' ').slice(0,2).join(' ')))?'<span style="margin-left:8px;font-size:9px;color:#D4760A;font-weight:600">✦ Introduced</span>':''}</div>
 ${(()=>{const c=CONSERVATION[sp.sn]||CONSERVATION[sp.sn.split(' ').slice(0,2).join(' ')];if(!c)return '';let badges='';if(c.iucn)badges+=`<span class="ds-cons-badge ds-cons-iucn ${c.iucn.toLowerCase()}">IUCN ${c.iucnFull||c.iucn}</span>`;if(c.esa)badges+=`<span class="ds-cons-badge ds-cons-esa">ESA ${c.esa}</span>`;if(c.cesa)badges+=`<span class="ds-cons-badge ds-cons-cesa">CESA ${c.cesa}</span>`;if(c.cnps)badges+=`<span class="ds-cons-badge ds-cons-cnps" style="background:${c.cnps.startsWith('1B.1')?'#B71C1C':c.cnps.startsWith('1B')?'#E65100':c.cnps.startsWith('2')?'#F57F17':c.cnps.startsWith('4')?'#546E7A':'#795548'};color:#fff">CNPS ${c.cnps}</span>`;if(c.state)badges+=`<span class="ds-cons-badge ds-cons-state">${c.state}</span>`;return `<div class="ds-cons"><div class="ds-cons-badges">${badges}</div>${c.note||''}</div>`;})()}
 <div class="ds-desc">${sp.desc}</div>${rElev(sp)}${rPhen(sp)}${rHP(sp)}
-<div class="ds-map-label">LA County Observations</div>
+${sspSectionHtml}<div class="ds-map-label">LA County Observations</div>
 <div class="ds-map-wrap">
 <div class="ds-map" id="dsMap"></div>
 </div>
