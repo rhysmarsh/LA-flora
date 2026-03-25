@@ -1,12 +1,12 @@
 # LA County Plant, Moss & Lichen Field Guide
 
-A free, open-source progressive web app (PWA) field guide to **1,480 plants, mosses, and lichens** of Los Angeles County. Wildflowers, trees, shrubs, ferns, grasses, cacti, aquatic plants, vines, mosses, and lichens — with photos, field marks, bloom times, ecological notes, and iNaturalist observation maps.
+A free, open-source progressive web app (PWA) field guide to **1,474 plants, mosses, and lichens** of Los Angeles County. Wildflowers, trees, shrubs, ferns, grasses, cacti, aquatic plants, vines, mosses, and lichens — with photos, field marks, bloom times, ecological notes, and iNaturalist observation maps.
 
 **Live at [laplants.org](https://laplants.org)**
 
 ## Features
 
-- **1,480 species** across 10 taxa groups — 1,058 native, 379 introduced, 43 invasive
+- **1,474 species** across 10 taxa groups — 1,058 native, 379 introduced, 43 invasive
 - **iNaturalist life list tracking** — enter your iNat username to see which species you've observed
 - **Satellite observation maps** — iNat occurrence maps for every species
 - **Photo caching** — photos fetched from iNat API and cached in IndexedDB for fast loading
