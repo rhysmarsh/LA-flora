@@ -26,7 +26,7 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 .hdr::after{content:'';position:absolute;top:-30%;right:-10%;width:200px;height:200px;background:radial-gradient(circle,rgba(191,164,110,0.08),transparent 70%);border-radius:50%;pointer-events:none}
 .hdr h1{font-family:var(--fd);font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-0.01em;position:relative}
 .hdr .sub{font-size:12px;margin-top:4px;opacity:0.55;font-weight:500;position:relative}
-.tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:0;z-index:50;padding-top:env(safe-area-inset-top,0px)}
+.tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:0;z-index:50}
 .tbar::-webkit-scrollbar{display:none}
 .ttab{flex:1 0 auto;min-width:52px;padding:8px 6px 6px;background:none;border:none;border-bottom:3px solid transparent;display:flex;flex-direction:column;align-items:center;gap:1px;opacity:0.42;transition:all 0.25s}
 .ttab.active{opacity:1;border-bottom-color:var(--forest)}.ttab .em{font-size:18px;line-height:1.1}
@@ -389,20 +389,16 @@ function subU(){const v=document.getElementById('llI').value.trim();saveU(v||nul
 
 function rSL(){const el=document.getElementById('sLeg');
 let h=`<button class="sp ${!state.statusFilter?'aa':''}" data-s="">All</button>`;
-for(const[k,v]of Object.entries(STATUS)){const a=state.statusFilter===k;h+=`<button class="sp" data-s="${k}" style="background:${a?v.color:v.bg};color:${a?'#fff':v.color};border-color:${v.color}40">${v.label}</button>`;}
-if(state.inatUsername){h+=`<span style="margin-left:8px;border-left:1px solid #ddd;padding-left:8px">`;
-h+=`<button class="sp ${state.observedFilter==='observed'?'aa':''}" data-o="observed" style="${state.observedFilter==='observed'?'background:#2E7D32;color:#fff;border-color:#2E7D32':''}" title="Show only observed">✓ Seen</button>`;
-h+=`<button class="sp ${state.observedFilter==='unobserved'?'aa':''}" data-o="unobserved" style="${state.observedFilter==='unobserved'?'background:#C62828;color:#fff;border-color:#C62828':''}" title="Show only not yet observed">○ Unseen</button>`;
-h+=`</span>`;}
-h+=`<span style="margin-left:8px;border-left:1px solid #ddd;padding-left:8px">`;
-h+=`<button class="sp ${state.endemicFilter==='endemic'?'aa':''}" data-ef="endemic" style="${state.endemicFilter==='endemic'?'background:#1A237E;color:#fff;border-color:#1A237E':''}" title="CA endemic species">🌿 Endemic</button>`;
-h+=`<button class="sp ${state.endemicFilter==='non-endemic'?'aa':''}" data-ef="non-endemic" style="${state.endemicFilter==='non-endemic'?'background:#78909C;color:#fff;border-color:#78909C':''}" title="Non-endemic species">All Others</button>`;
-h+=`</span>`;
-h+=`<span style="margin-left:8px;border-left:1px solid #ddd;padding-left:8px">`;
-h+=`<button class="sp" data-est="native" style="${state.estFilter==='native'?'background:#2E7D32;color:#fff;border-color:#2E7D32':'border-color:#2E7D3240;color:#2E7D32'}" title="Native species">🌿 Native</button>`;
-h+=`<button class="sp" data-est="introduced" style="${state.estFilter==='introduced'?'background:#E65100;color:#fff;border-color:#E65100':'border-color:#E6510040;color:#E65100'}" title="Introduced species">📦 Intro</button>`;
-h+=`<button class="sp" data-est="invasive" style="${state.estFilter==='invasive'?'background:#C62828;color:#fff;border-color:#C62828':'border-color:#C6282840;color:#C62828'}" title="Invasive species">⚠️ Invasive</button>`;
-h+=`</span>`;
+const mainStatuses=['common','uncommon','rare','endangered'];
+for(const k of mainStatuses){const v=STATUS[k];if(!v)continue;const a=state.statusFilter===k;h+=`<button class="sp" data-s="${k}" style="background:${a?v.color:v.bg};color:${a?'#fff':v.color};border-color:${v.color}40">${v.label}</button>`;}
+if(state.inatUsername){
+h+=`<button class="sp ${state.observedFilter==='observed'?'aa':''}" data-o="observed" style="${state.observedFilter==='observed'?'background:#2E7D32;color:#fff;border-color:#2E7D32':''}" title="Observed">✓ Seen</button>`;
+h+=`<button class="sp ${state.observedFilter==='unobserved'?'aa':''}" data-o="unobserved" style="${state.observedFilter==='unobserved'?'background:#C62828;color:#fff;border-color:#C62828':''}" title="Not yet observed">○ Unseen</button>`;}
+h+=`<div style="width:100%;height:0"></div>`;
+h+=`<button class="sp" data-est="native" style="${state.estFilter==='native'?'background:#2E7D32;color:#fff;border-color:#2E7D32':'border-color:#2E7D3240;color:#2E7D32'}">Native</button>`;
+h+=`<button class="sp" data-est="introduced" style="${state.estFilter==='introduced'?'background:#E65100;color:#fff;border-color:#E65100':'border-color:#E6510040;color:#E65100'}">Intro</button>`;
+h+=`<button class="sp" data-est="invasive" style="${state.estFilter==='invasive'?'background:#C62828;color:#fff;border-color:#C62828':'border-color:#C6282840;color:#C62828'}">Invasive</button>`;
+h+=`<button class="sp ${state.endemicFilter==='endemic'?'aa':''}" data-ef="endemic" style="${state.endemicFilter==='endemic'?'background:#1A237E;color:#fff;border-color:#1A237E':'border-color:#1A237E40;color:#1A237E'}">Endemic</button>`;
 el.innerHTML=h;el.querySelectorAll('.sp[data-s]').forEach(b=>b.addEventListener('click',()=>{const s=b.dataset.s;state.statusFilter=s===''?null:(state.statusFilter===s?null:s);render();}));
 el.querySelectorAll('[data-ef]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.ef;state.endemicFilter=state.endemicFilter===v?null:v;render();}));
 el.querySelectorAll('.sp[data-o]').forEach(b=>b.addEventListener('click',()=>{const o=b.dataset.o;state.observedFilter=state.observedFilter===o?null:o;render();}));
@@ -488,7 +484,55 @@ return '<div class="ds-phen-mo '+(peak?'peak':active?'active':'off')+'" style="h
 }
 function rHP(sp){
 if(!sp.hp)return '';
-return '<div class="ds-hp"><div class="ds-hp-label">Ecological Associations</div><div class="ds-hp-list">'+sp.hp+'</div></div>';
+let txt=sp.hp;
+// Cross-link insect names to labugs.org — species deep-links and group links
+const BUG_LINKS={
+// Butterflies — species deep-links
+"Monarch":"Danaus+plexippus","Painted Lady":"Vanessa+cardui","West Coast Lady":"Vanessa+annabella",
+"American Lady":"Vanessa+virginiensis","Western Tiger Swallowtail":"Papilio+rutulus",
+"Pale Swallowtail":"Papilio+eurymedon","Anise Swallowtail":"Papilio+zelicaon",
+"Pipevine Swallowtail":"Battus+philenor","Mourning Cloak":"Nymphalis+antiopa",
+"Lorquin's Admiral":"Limenitis+lorquini","California Dogface":"Zerene+eurydice",
+"Common Buckeye":"Junonia+coenia","Gray Hairstreak":"Strymon+melinus",
+"Acmon Blue":"Icaricia+acmon","Mormon Metalmark":"Apodemia+mormo",
+"California Sister":"Adelpha+californica","Red Admiral":"Vanessa+atalanta",
+"Henry's Elfin":"Callophrys+henrici","Echo Blue":"Celastrina+echo",
+"Spring Azure":"Celastrina+ladon","El Segundo Blue":"Euphilotes+battoides+allyni",
+"Bramble Hairstreak":"Callophrys+dumetorum","Common Checkered Skipper":"Burnsius+communis",
+"Chalcedon Checkerspot":"Euphydryas+chalcedona","Gulf Fritillary":"Dione+vanillae",
+"Marine Blue":"Leptotes+marina","Fiery Skipper":"Hylephila+phyleus",
+"Sara Orangetip":"Anthocharis+sara","Cabbage White":"Pieris+rapae",
+"Variable Checkerspot":"Euphydryas+chalcedona","Cloudless Sulphur":"Phoebis+sennae",
+"Orange Skipperling":"Copaeodes+aurantiaca",
+// Moths — species deep-links
+"White-lined Sphinx Moth":"Hyles+lineata","Tobacco Hornworm":"Manduca+sexta",
+"Yucca Moth":"Tegeticula+maculata","Western Tussock Moth":"Orgyia+vetusta",
+"Sphinx Moth":"Hyles+lineata","Hawk Moth":"Hyles+lineata"
+};
+// Group-level links — link to taxa group, not individual species
+const GROUP_LINKS={
+"bumble bee":"#bumblebees","Bumble bee":"#bumblebees","bumble bees":"#bumblebees","Bumble bees":"#bumblebees",
+"carpenter bee":"#nativeBees","Carpenter bee":"#nativeBees","carpenter bees":"#nativeBees","Carpenter bees":"#nativeBees",
+"native bee":"#nativeBees","native bees":"#nativeBees","Native bee":"#nativeBees","Native bees":"#nativeBees",
+"sweat bee":"#nativeBees","sweat bees":"#nativeBees","Sweat bee":"#nativeBees",
+"mining bee":"#nativeBees","mining bees":"#nativeBees","Mining bee":"#nativeBees",
+"mason bee":"#nativeBees","Mason bee":"#nativeBees",
+"leafcutter bee":"#nativeBees","Leafcutter bee":"#nativeBees",
+"hover fly":"#hoverflies","hover flies":"#hoverflies","hoverfly":"#hoverflies","hoverflies":"#hoverflies",
+"hawkmoth":"#moths","hawkmoths":"#moths","hawk moth":"#moths","hawk moths":"#moths",
+"ladybug":"#beetles","ladybugs":"#beetles"
+};
+for(const[cn,sn] of Object.entries(BUG_LINKS)){
+if(txt.includes(cn)){
+txt=txt.replace(new RegExp(cn.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'),
+`<a href="https://labugs.org?species=${sn}" target="_blank" rel="noopener" style="color:var(--forest);text-decoration:underline;text-decoration-color:var(--gold);font-weight:600">${cn}</a>`);
+}}
+for(const[term,hash] of Object.entries(GROUP_LINKS)){
+if(txt.includes(term)&&!txt.includes(`>${term}</a>`)){
+txt=txt.replace(new RegExp('(?<!>)'+term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'),
+`<a href="https://labugs.org${hash}" target="_blank" rel="noopener" style="color:var(--forest);text-decoration:underline;text-decoration-color:var(--gold)">${term}</a>`);
+}}
+return '<div class="ds-hp"><div class="ds-hp-label">Ecological Associations</div><div class="ds-hp-list">'+txt+'</div></div>';
 }
 
 function rFM(sp){if(!sp.fm)return '';let h='';for(const[l,v]of Object.entries(sp.fm))h+=`<div class="ds-fmr"><span class="ds-fml">${l}</span><span class="ds-fmv">${v}</span></div>`;return h;}
@@ -577,9 +621,18 @@ document.getElementById('sInp').value=state.searchQuery;rSp();}
 
 loadState();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+// Deep-link: ?species=Scientific+name opens directly to that species
+function findAndOpenSpecies(query){
+const q=query.toLowerCase().replace(/\+/g,' ');
+for(const k of TAXA_ORDER){
+const sp=(SPECIES_DATA[k]||[]).find(s=>s.sn.toLowerCase()===q||s.cn.toLowerCase()===q);
+if(sp){saveT(k);render();setTimeout(()=>openDS(sp),300);return true;}}
+return false;}
 loadSpeciesData().then(()=>{
 const _initTimeout=setTimeout(()=>{try{render();}catch(e){console.error('Init render error:',e);}},2000);
-hydrateCache().then(()=>{clearTimeout(_initTimeout);try{render();}catch(e){console.error('Render error:',e);}}).catch(()=>{clearTimeout(_initTimeout);try{render();}catch(e){console.error('Render error:',e);}});
+hydrateCache().then(()=>{clearTimeout(_initTimeout);try{render();}catch(e){console.error('Render error:',e);}
+const params=new URLSearchParams(location.search);const spQ=params.get('species');if(spQ)findAndOpenSpecies(spQ);
+}).catch(()=>{clearTimeout(_initTimeout);try{render();}catch(e){console.error('Render error:',e);}});
 if(state.inatUsername)fetchLL();
 });
 window.addEventListener('hashchange',()=>{const h=location.hash.replace('#','');if(TAXA_ORDER.includes(h)&&h!==state.activeTaxon){saveT(h);render();}});
