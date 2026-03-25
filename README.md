@@ -1,160 +1,89 @@
 # LA County Plant, Moss & Lichen Field Guide
 
-> **⚠️ FOR INFORMATIONAL PURPOSES ONLY.** Do not eat, touch, or otherwise interact with any plant, lichen, or moss based solely on information in this guide. Misidentification can cause serious injury or death. Any action taken or not taken is solely at the user's own risk. See [LICENSE](LICENSE) for full disclaimer.
+A free, open-source progressive web app (PWA) field guide to **1,480 plants, mosses, and lichens** of Los Angeles County. Wildflowers, trees, shrubs, ferns, grasses, cacti, aquatic plants, vines, mosses, and lichens — with photos, field marks, bloom times, ecological notes, and iNaturalist observation maps.
 
-A comprehensive self-contained PWA field guide to the flora of Los Angeles County, California — from coastal salt marsh to 10,000 ft alpine, Mojave Desert to Channel Islands fog zone.
-
-**[Live site →](https://laplants.org)**
-
-## Stats
-
-| Taxa | Count |
-|---|---|
-| 🌸 Wildflowers | 353 |
-| 🌿 Shrubs | 102 |
-| 🌳 Trees | 66 |
-| 🍃 Lichens | 55 |
-| 🌾 Grasses / Rushes / Sedges | 48 |
-| 🪨 Mosses | 26 |
-| 🌵 Cacti / Succulents | 24 |
-| 🌱 Ferns / Allies | 22 |
-| 🌊 Aquatic / Wetland | 18 |
-| 🪴 Vines | 16 |
-| **Total** | **730** |
-
-- **636 native** · 82 introduced (with Cal-IPC ratings)
-- **150 families** represented
-- **55 lichens** (field-identifiable — no microscopy/reagents required)
-- **26 mosses** (field-identifiable by growth form and habitat)
-- **19 lupines** · 11 dudleyas · 9 manzanitas · 9 sages · 9 oaks · 9 ceanothus
-- **131 species** tagged with fire ecology
-- **78 species** with ecological associations (pollinator/host plant data)
-- **50 species** tagged as endemic (CA, SoCal, Channel Islands)
-- **43 Cal-IPC rated invasives** (15 High, 22 Moderate, 6 Limited)
-- **10 confusable species pairs** with bidirectional `vs` field marks
+**Live at [laplants.org](https://laplants.org)**
 
 ## Features
 
-- **Single-file PWA** — works offline after first load; installable on iOS/Android
-- **iNaturalist integration** — photos via taxa/autocomplete API, cached in IndexedDB; life list via species_counts API
-- **Satellite observation maps** — iNat occurrence data on ESRI basemap with LA County bounds
-- **Cal-IPC invasive badges** — red (High), orange (Moderate), gray (Limited) on species cards
-- **Endemic badges** — navy (CA), purple (SoCal), teal (Channel Islands)
-- **Duration badges** — orange (annual), amber (biennial), green (perennial)
-- **Status filtering** — common, uncommon, rare, endangered
-- **Endemic filter** — show only endemic species
-- **Cross-taxon search** — search any species name from any tab, with "Also found in" links
-- **Phenology bars** — bloom period with peak months highlighted
-- **Fire ecology** — tagged in species detail cards
-- **Ecological associations** — pollinator and host plant relationships
+- **1,480 species** across 10 taxa groups — 1,058 native, 379 introduced, 43 invasive
+- **iNaturalist life list tracking** — enter your iNat username to see which species you've observed
+- **Satellite observation maps** — iNat occurrence maps for every species
+- **Photo caching** — photos fetched from iNat API and cached in IndexedDB for fast loading
+- **Offline-capable** — service worker caches all files for offline use
+- **100% ecological association notes** — every species has a unique species-specific ecological note
+- **Establishment filter** — toggle Native / Introduced / Invasive species
+- **Endemic filter** — show only California endemic species
+- **Family chips** — filter by plant family with taxonomic or alphabetical sorting
+- **Responsive** — designed for mobile field use
+- **No tracking, no ads, no login required**
+
+## Species Coverage
+
+| Group | Count | Notable |
+|---|---|---|
+| Wildflowers | 531 | Lupines, poppies, phacelias, buckwheats, sages |
+| Shrubs | 391 | Chaparral, coastal sage scrub, desert shrubs |
+| Grasses | 164 | Bunchgrasses, sedges, rushes, invasive annual grasses |
+| Lichens | 128 | Foliose, fruticose, crustose, soil crust |
+| Trees | 102 | Oaks, pines, sycamores, willows + common planted species |
+| Ferns | 47 | Maidenhairs, lip ferns, bracken, horsetails, clubmosses |
+| Cacti | 41 | Prickly pears, chollas, barrel cacti, dudleyas |
+| Aquatic | 34 | Cattails, tule, pickleweed, salt marsh specialists |
+| Mosses | 26 | Rock mosses, streambank mosses, urban mosses |
+| Vines | 16 | Wild grape, morning glories, clematis, dodder |
 
 ## Architecture
 
-Self-contained single HTML file (~430 KB). All species data, CSS, and JS inlined. No build step, no dependencies, no framework.
+v3 two-file PWA architecture:
 
-- Photos: fetched from iNat `/taxa/autocomplete`, cached in IndexedDB (`plantGuidePhotos`)
-- Life list: iNat `species_counts` API with place_id=962 (LA County)
-- Maps: ESRI satellite tiles + iNat observation overlay
-- Fonts: EB Garamond (serif) + DM Sans (sans-serif) via Google Fonts
-- Branding: dark forest green `#1A3C35`, muted gold `#BFA46E`, warm cream `#FAF8F4`
-
-## Sources
-
-This guide was compiled from the following authoritative references:
-
-**Vascular Plants**
-- Muns & Chester, *SMM Flora Checklist* (1983/1999/2002) — 100% coverage
-- Chester, Fisher, Strong et al., *Flora of Lower Eaton Canyon* (2003) — 98% coverage
-- Muns, *Flora of Chantry Flat / Santa Anita Canyon* (1999)
-- Raven, Thompson & Prigge, *Flora of the Santa Monica Mountains* (2nd ed., 1986)
-- Cooper, *Flora of Griffith Park* (2015) — 326 vouchered native taxa
-- Mistretta, *Field Guide to the Flora of the San Gabriel Mountains* (CalBG, 2020)
-- Sholars, *Lupines of California* (CNPS Press)
-- Strong & Chester, *Geographic Distribution of Arctostaphylos Species in the SGM*
-- Theodore Payne Foundation High Desert Plant Database
-- Las Pilitas Nursery LA Native Plant Reference
-- McAuley, *Wildflowers of the Santa Monica Mountains*
-
-**Lichens**
-- Tucker & Ryan, *Revised Catalog of Lichens, Lichenicoles, and Allied Fungi in California* (Constancea 84/85, 2006/2013)
-- CALS Mini Guide to Southern California Lichens
-- Sharnoff, *California Lichens*
-- iNat Lichens of Southern California project (Chris Wagner, UCR Herbarium)
-- Hasse, *Flora of Southern California Lichens* (1913) — historical baseline
-
-**Mosses**
-- Malcolm, Shevock & Norris, *California Mosses* (2009)
-- California Moss eFlora (Paul Wilson, ed.)
-- CNPS Bryophyte Chapter
-- iNat Bryophytes of Southern California project (Chris Wagner, UCR)
-
-**Invasive Species**
-- Cal-IPC, *California Invasive Plant Inventory* (2006-2024)
-
-**General Reference**
-- Jepson eFlora (ucjeps.berkeley.edu)
-- Calflora (calflora.org)
-- CNPS Rare Plant Inventory
-- Xerces Society California Pollinator Plant List
-- Calscape (calscape.org)
-- iNaturalist (inaturalist.org)
+```
+index.html          — 77 KB (CSS + JS + config, no framework)
+species-data.json   — 830 KB (species data, loaded async)
+sw.js               — 1 KB (service worker, network-first + cache-fallback)
+manifest.json       — PWA manifest
+icons/              — App icons (192px, 512px, apple-touch)
+```
 
 ## Deployment
 
-The `la-plant-guide-deploy.zip` contains everything needed for Netlify drag-and-drop deployment:
+Hosted on Netlify via drag-and-drop zip deployment.
 
-```
-index.html          # Complete self-contained PWA
-sw.js               # Service worker for offline caching
-manifest.json       # PWA manifest
-_headers            # Cache control + security headers
-_redirects          # Netlify redirect rules
-icons/              # App icons (SVG primary, PNG fallback)
-```
+1. Zip all files: `index.html`, `species-data.json`, `sw.js`, `manifest.json`, `_headers`, `_redirects`, `icons/`
+2. Drag zip to [app.netlify.com/drop](https://app.netlify.com/drop)
+3. Configure custom domain: `laplants.org`
 
-Canonical URL: `https://laplants.org`
+## Data Sources
 
-## Species Data Schema
+Species data verified against iNaturalist research-grade observations (LA County, place_id=962, ≥2 RG observations). Full gap audit run 2026-03-25.
 
-```javascript
-{
-  id: 'wil_0001',               // Unique identifier
-  cn: 'California Poppy',       // Common name
-  sn: 'Eschscholzia californica', // Scientific name (iNat-compatible)
-  fam: 'Papaveraceae',          // Family
-  st: 'common',                 // Status: common|uncommon|rare|endangered
-  dur: 'annual',                // Duration/growth form
-  end: 'CA',                    // Endemic: CA|SoCal|Channel Islands|CA/Baja
-  desc: '...',                  // Description (70-240 chars)
-  elev: 'low,foot',             // Elevation: coast|low|foot|mid|high
-  mo: [2,3,4,5,6,7],           // Bloom/active months
-  pk: [3,4,5],                  // Peak months (subset of mo)
-  fm: {                         // Field marks
-    Height: '...',
-    Color: '...',
-    Habitat: '...',
-    Bloom: '...',
-    vs: '...',                  // Differentiation from similar species
-    Fire: '...',                // Fire ecology
-  },
-  hp: '...',                    // Ecological associations
-  intro: true,                  // Introduced (non-native) flag
-  ipc: 'High',                 // Cal-IPC rating: High|Moderate|Limited
-  ssp: true,                   // Subspecies (excluded from counts)
-}
-```
+### Botanical References
+- Jepson eFlora (ucjeps.berkeley.edu/eflora)
+- Muns & Chester, *Flora of the Santa Monica Mountains* (1999/2002)
+- Cooper, *Flora of Griffith Park* (2015)
+- Raven, Thompson & Prigge, *Flora of the Santa Monica Mountains* (1986)
+- Calflora, CNPS, Calscape, Cal-IPC Inventory
 
-## Contributing
+### Ecological References
+- Xerces Society, *California Pollinator Plant List*
+- Las Pilitas Nursery, butterfly-plant database
+- California Chaparral Institute, fire ecology
+- Keeley et al., chaparral fire ecology research
+- Tucker & Ryan, *Revised Catalog of California Lichens*
+- Malcolm, Shevock & Norris, *California Mosses*
 
-Species additions, corrections, and field mark improvements are welcome. Priority areas for community contribution:
+## Related Guides
 
-- **SGM subregional floras** — Mt. Wilson Trail (295 taxa), Placerita Canyon (331 taxa) still have deeper species to extract
-- **Moss/lichen verification** — 4 lichens marked unverified; lichenologist/bryologist review welcome
-- **Ecological associations** — 78/730 species have `hp` data; could expand to 200+ connecting plants to invertebrate guide
-- **Photo fetch accuracy** — large genera (Calochortus, Quercus, Pinus, Salvia) need manual verification of iNat photo results
+Part of the LA County Field Guide Suite:
+- **[labugs.org](https://labugs.org)** — Invertebrate Field Guide (1,016 species)
+- **[lafungi.org](https://lafungi.org)** — Fungi Field Guide (567 species)
 
 ## License
 
-GNU General Public License v3.0 — see [LICENSE](LICENSE) for full text and additional disclaimer.
+GPL v3. See [LICENSE](LICENSE) for details.
 
-Species data compiled from public sources. Photos loaded dynamically from iNaturalist (CC-licensed by individual photographers). This guide does not store or redistribute photographs.
+For informational purposes only — not a substitute for expert identification. Do not eat wild plants based on this guide.
+
+## Author
+
+Rhys Marsh · Los Angeles, CA
