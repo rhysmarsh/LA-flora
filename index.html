@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<title>LA County Plant, Moss & Lichen Field Guide — v3.003</title>
+<title>LA County Plant, Moss & Lichen Field Guide — v3.004</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 .hdr::after{content:'';position:absolute;top:-30%;right:-10%;width:200px;height:200px;background:radial-gradient(circle,rgba(191,164,110,0.08),transparent 70%);border-radius:50%;pointer-events:none}
 .hdr h1{font-family:var(--fd);font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-0.01em;position:relative}
 .hdr .sub{font-size:12px;margin-top:4px;opacity:0.55;font-weight:500;position:relative}
-.tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:env(safe-area-inset-top,0px);z-index:50}
+.tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:0;z-index:50;padding-top:env(safe-area-inset-top,0px)}
 .tbar::-webkit-scrollbar{display:none}
 .ttab{flex:1 0 auto;min-width:52px;padding:8px 6px 6px;background:none;border:none;border-bottom:3px solid transparent;display:flex;flex-direction:column;align-items:center;gap:1px;opacity:0.42;transition:all 0.25s}
 .ttab.active{opacity:1;border-bottom-color:var(--forest)}.ttab .em{font-size:18px;line-height:1.1}
@@ -73,8 +73,9 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 .sc::after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,0.65) 0%,rgba(0,0,0,0.12) 40%,transparent 60%);pointer-events:none;border-radius:inherit}
 .sc:active{transform:scale(0.97)}
 .ob{position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;background:var(--green-ok);display:flex;align-items:center;justify-content:center;z-index:3;box-shadow:0 1px 3px rgba(0,0,0,0.3);color:#fff;font-size:11px;font-weight:700}
-.inv-pill{position:absolute;top:6px;left:6px;padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700;letter-spacing:0.04em;z-index:3;box-shadow:0 1px 3px rgba(0,0,0,0.3);color:#fff;background:#C62828}
-.intro-pill{position:absolute;top:6px;left:6px;padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700;letter-spacing:0.04em;z-index:3;box-shadow:0 1px 3px rgba(0,0,0,0.3);color:#fff;background:#E65100}
+.inv-pill{padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700;font-family:var(--fb);font-style:normal;letter-spacing:0.04em;box-shadow:0 1px 3px rgba(0,0,0,0.3);color:#fff;background:#C62828}
+.intro-pill{padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700;font-family:var(--fb);font-style:normal;letter-spacing:0.04em;box-shadow:0 1px 3px rgba(0,0,0,0.3);color:#fff;background:#E65100}
+.badge-col{position:absolute;top:5px;left:5px;z-index:3;display:flex;flex-direction:column;gap:3px;align-items:flex-start}
 .cp{position:absolute;inset:0;background-size:cover;background-position:center}
 .cp .ep{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:38px;opacity:0.25}
 .cp .fb{display:none}
@@ -111,10 +112,10 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 .ds-map{width:100%;height:240px}
 .ds-map-label{font-size:10px;font-weight:600;color:var(--forest);margin-bottom:6px;letter-spacing:0.04em;text-transform:uppercase}
 /* Tile status pip — top-left corner, only notable statuses */
-.st-pip{position:absolute;top:6px;left:10px;z-index:3;display:flex;align-items:center;gap:3px;padding:2px 7px 2px 5px;border-radius:8px;font-size:7.5px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 1px 4px rgba(0,0,0,0.3);pointer-events:none;line-height:1}
+.st-pip{z-index:3;display:flex;align-items:center;gap:3px;padding:2px 7px 2px 5px;border-radius:8px;font-size:7.5px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);box-shadow:0 1px 4px rgba(0,0,0,0.3);pointer-events:none;line-height:1}
 .st-pip .st-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 /* Introduced marker — subtle glyph after sci name */
-.intro-mark{font-style:normal;font-size:9px;color:rgba(255,255,255,0.7);margin-left:3px;vertical-align:baseline}
+.intro-mark{font-style:normal!important;font-family:var(--fb)!important;font-size:9px;color:rgba(255,255,255,0.7);margin-left:3px;vertical-align:baseline}
 /* Conservation listing badge in detail sheet */
 .ds-cons{margin-bottom:12px;padding:8px 10px;border-radius:8px;border-left:3px solid #C62828;background:rgba(198,40,40,0.06);font-size:11px;line-height:1.5;color:#555}
 .ds-cons-badges{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:4px}
@@ -189,11 +190,11 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <meta name="robots" content="index, follow">
 <meta name="author" content="Rhys Marsh">
 <meta name="keywords" content="LA County plants, Los Angeles wildflowers, California native plants, plant field guide, Southern California flora, LA hiking plants, native plant identification, bloom times, iNaturalist, mosses, lichens, ferns, cacti, trees, shrubs, grasses, PWA field guide">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://laplants.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.003","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://laplants.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.004","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
 </head>
 <body>
 <div class="ld-ovr" id="ldOvr"><div class="ld-spin"></div><div class="ld-txt">Loading species data…</div></div>
-<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.003</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
+<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.004</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
 <nav class="tbar" id="tBar"></nav>
 <main class="cnt">
 <div class="llb" id="llBar"></div>
@@ -459,7 +460,9 @@ const ps=ca&&ca.url?`background:url(${ca.url}) center/cover no-repeat`:`backgrou
 const pip=STATUS_PIP[sp.st];const isIntro=INTRO_SET.has(sp.sn)||INTRO_SET.has(sp.sn.split(' ').slice(0,2).join(' '));const isInv=sp.est==='invasive';
 const sspPip=ssps.length>0?`<div class="ssp-pip">${ssps.length} ssp</div>`:'';
 const estPill=isInv?'<div class="inv-pill">⚠ INV</div>':isIntro?'<div class="intro-pill">INTRO</div>':'';
-html+=`<div class="sc" style="border-left-color:${fc}" data-sid="${sp.id}">${obs?`<div class="ob">✓</div>`:''}${estPill}${pip?`<div class="st-pip" style="background:${pip.bg};color:${pip.text}"><span class="st-dot" style="background:${pip.dot}"></span>${pip.label}</div>`:''}
+const stPip=pip?`<div class="st-pip" style="background:${pip.bg};color:${pip.text}"><span class="st-dot" style="background:${pip.dot}"></span>${pip.label}</div>`:'';
+const badgeCol=(estPill||stPip)?`<div class="badge-col">${estPill}${stPip}</div>`:'';
+html+=`<div class="sc" style="border-left-color:${fc}" data-sid="${sp.id}">${obs?`<div class="ob">✓</div>`:''}${badgeCol}
 <div class="cp" style="${ps}">${!ca||!ca.url?`<div class="ep">${tc.emoji}</div>`:''}</div>
 ${sspPip}<div class="cb"><div class="ccn">${sp.cn}</div><div class="csn">${sp.sn}${isIntro?'<span class="intro-mark"> ✦</span>':''}</div></div></div>`;}
 html+=`</div></div>`;}
