@@ -2,7 +2,7 @@
 
 A free, open-source progressive web app (PWA) field guide to **1,474 plants, mosses, and lichens** of Los Angeles County. Wildflowers, trees, shrubs, ferns, grasses, cacti, aquatic plants, vines, mosses, and lichens — with photos, field marks, bloom times, ecological notes, and iNaturalist observation maps.
 
-**Live at [laplants.org](https://laplants.org)**
+**Live at [la-flora.org](https://la-flora.org)**
 
 ## Features
 
@@ -51,7 +51,7 @@ Hosted on Netlify via drag-and-drop zip deployment.
 
 1. Zip all files: `index.html`, `species-data.json`, `sw.js`, `manifest.json`, `_headers`, `_redirects`, `icons/`
 2. Drag zip to [app.netlify.com/drop](https://app.netlify.com/drop)
-3. Configure custom domain: `laplants.org`
+3. Configure custom domain: `la-flora.org`
 
 ## Data Sources
 

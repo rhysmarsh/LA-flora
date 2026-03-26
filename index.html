@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<title>LA County Plant, Moss & Lichen Field Guide — v3.004</title>
+<title>LA County Plant, Moss & Lichen Field Guide — v3.005</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 .hdr::after{content:'';position:absolute;top:-30%;right:-10%;width:200px;height:200px;background:radial-gradient(circle,rgba(191,164,110,0.08),transparent 70%);border-radius:50%;pointer-events:none}
 .hdr h1{font-family:var(--fd);font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-0.01em;position:relative}
 .hdr .sub{font-size:12px;margin-top:4px;opacity:0.55;font-weight:500;position:relative}
-.tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:0;z-index:50}
+.tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:0;z-index:50;padding-top:env(safe-area-inset-top,0px)}
 .tbar::-webkit-scrollbar{display:none}
 .ttab{flex:1 0 auto;min-width:52px;padding:8px 6px 6px;background:none;border:none;border-bottom:3px solid transparent;display:flex;flex-direction:column;align-items:center;gap:1px;opacity:0.42;transition:all 0.25s}
 .ttab.active{opacity:1;border-bottom-color:var(--forest)}.ttab .em{font-size:18px;line-height:1.1}
@@ -178,11 +178,11 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 .ld-txt{color:var(--gold);font-family:var(--fd);font-size:14px;opacity:0.7;letter-spacing:0.04em}
 </style>
 <meta name="description" content="A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.">
-<link rel="canonical" href="https://laplants.org/">
+<link rel="canonical" href="https://la-flora.org/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="LA County Plant Field Guide">
 <meta property="og:description" content="A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.">
-<meta property="og:url" content="https://laplants.org/">
+<meta property="og:url" content="https://la-flora.org/">
 <meta property="og:site_name" content="LAplants">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="LA County Plant Field Guide">
@@ -190,11 +190,11 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <meta name="robots" content="index, follow">
 <meta name="author" content="Rhys Marsh">
 <meta name="keywords" content="LA County plants, Los Angeles wildflowers, California native plants, plant field guide, Southern California flora, LA hiking plants, native plant identification, bloom times, iNaturalist, mosses, lichens, ferns, cacti, trees, shrubs, grasses, PWA field guide">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://laplants.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.004","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.005","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
 </head>
 <body>
 <div class="ld-ovr" id="ldOvr"><div class="ld-spin"></div><div class="ld-txt">Loading species data…</div></div>
-<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.004</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
+<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.005</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
 <nav class="tbar" id="tBar"></nav>
 <main class="cnt">
 <div class="llb" id="llBar"></div>
@@ -621,17 +621,21 @@ document.getElementById('sInp').value=state.searchQuery;rSp();}
 
 loadState();
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
-// Deep-link: ?species=Scientific+name opens directly to that species
+// Deep-link: ?species=Scientific+name OR #species/Scientific_name opens directly to that species
 function findAndOpenSpecies(query){
-const q=query.toLowerCase().replace(/\+/g,' ');
+const q=query.toLowerCase().replace(/\+/g,' ').replace(/_/g,' ');
 for(const k of TAXA_ORDER){
-const sp=(SPECIES_DATA[k]||[]).find(s=>s.sn.toLowerCase()===q||s.cn.toLowerCase()===q);
-if(sp){saveT(k);render();setTimeout(()=>openDS(sp),300);return true;}}
+for(const sp of(SPECIES_DATA[k]||[])){
+if(sp.sn.toLowerCase()===q||sp.cn.toLowerCase()===q){saveT(k);render();setTimeout(()=>openDS(sp),300);return true;}}}
 return false;}
+function checkDeepLink(){
+const params=new URLSearchParams(location.search);const spQ=params.get('species');
+if(spQ){findAndOpenSpecies(spQ);return;}
+const h=location.hash;if(h.startsWith('#species/')){findAndOpenSpecies(h.replace('#species/',''));}}
 loadSpeciesData().then(()=>{
 const _initTimeout=setTimeout(()=>{try{render();}catch(e){console.error('Init render error:',e);}},2000);
 hydrateCache().then(()=>{clearTimeout(_initTimeout);try{render();}catch(e){console.error('Render error:',e);}
-const params=new URLSearchParams(location.search);const spQ=params.get('species');if(spQ)findAndOpenSpecies(spQ);
+checkDeepLink();
 }).catch(()=>{clearTimeout(_initTimeout);try{render();}catch(e){console.error('Render error:',e);}});
 if(state.inatUsername)fetchLL();
 });
