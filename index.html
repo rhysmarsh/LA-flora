@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<title>LA County Plant, Moss & Lichen Field Guide — v3.007</title>
+<title>LA County Plant, Moss & Lichen Field Guide — v3.010</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -26,7 +26,7 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 .hdr::after{content:'';position:absolute;top:-30%;right:-10%;width:200px;height:200px;background:radial-gradient(circle,rgba(191,164,110,0.08),transparent 70%);border-radius:50%;pointer-events:none}
 .hdr h1{font-family:var(--fd);font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-0.01em;position:relative}
 .hdr .sub{font-size:12px;margin-top:4px;opacity:0.55;font-weight:500;position:relative}
-.tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:calc(-1 * env(safe-area-inset-top,0px));z-index:50;padding-top:env(safe-area-inset-top,0px)}
+.tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:0;z-index:50;padding-top:env(safe-area-inset-top,0px);margin-top:calc(-1 * env(safe-area-inset-top,0px))}
 .tbar::-webkit-scrollbar{display:none}
 .ttab{flex:1 0 auto;min-width:52px;padding:8px 6px 6px;background:none;border:none;border-bottom:3px solid transparent;display:flex;flex-direction:column;align-items:center;gap:1px;opacity:0.42;transition:all 0.25s}
 .ttab.active{opacity:1;border-bottom-color:var(--forest)}.ttab .em{font-size:18px;line-height:1.1}
@@ -190,11 +190,11 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <meta name="robots" content="index, follow">
 <meta name="author" content="Rhys Marsh">
 <meta name="keywords" content="LA County plants, Los Angeles wildflowers, California native plants, plant field guide, Southern California flora, LA hiking plants, native plant identification, bloom times, iNaturalist, mosses, lichens, ferns, cacti, trees, shrubs, grasses, PWA field guide">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.007","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.010","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
 </head>
 <body>
 <div class="ld-ovr" id="ldOvr"><div class="ld-spin"></div><div class="ld-txt">Loading species data…</div></div>
-<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.007</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
+<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.010</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
 <nav class="tbar" id="tBar"></nav>
 <main class="cnt">
 <div class="llb" id="llBar"></div>
@@ -208,7 +208,7 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <div class="ti" id="tInfo"></div>
 <div id="spCont"></div>
 </main>
-<footer class="ft">Field guide by Rhys Marsh<div class="ftc">For informational purposes only — not a substitute for expert identification. By using this app you agree to the <a href="https://github.com/rhysmarsh/LA-flora/blob/main/LICENSE" target="_blank" rel="noopener" style="color:var(--gold)">terms &amp; license</a>.</div><div class="ftc">Data: iNaturalist · Photos: CC-licensed · Maps: ESRI + iNat · Ref: Calflora, CalPhotos, Jepson eFlora, California Native Plant Society, Theodore Payne Foundation</div><div style="display:flex;justify-content:center;gap:14px;margin-top:12px;flex-wrap:wrap"><a href="https://labugs.org" target="_blank" rel="noopener" style="color:var(--gold);font-family:var(--fb);font-weight:600;text-decoration:none;font-size:0.85rem">🐛 LA Invertebrates →</a><a href="https://lafungi.org" target="_blank" rel="noopener" style="color:var(--gold);font-family:var(--fb);font-weight:600;text-decoration:none;font-size:0.85rem">🍄 LA Fungi →</a></div><a href="https://github.com/rhysmarsh/LA-flora" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;color:var(--gold);font-family:var(--fb);font-weight:600;text-decoration:none;font-size:0.95rem">Fork this on GitHub →</a></footer>
+<footer class="ft">Field guide by Rhys Marsh<div class="ftc">For informational purposes only — not a substitute for expert identification. By using this app you agree to the <a href="https://github.com/rhysmarsh/LA-flora/blob/main/LICENSE" target="_blank" rel="noopener" style="color:var(--gold)">terms &amp; license</a>.</div><div class="ftc">Data: iNaturalist · Photos: CC-licensed · Maps: ESRI + iNat · Ref: Calflora, CalPhotos, Jepson eFlora, California Native Plant Society, Theodore Payne Foundation</div><div style="display:flex;justify-content:center;gap:14px;margin-top:12px;flex-wrap:wrap"><a href="https://labugs.org" target="_blank" rel="noopener" style="color:var(--gold);font-family:var(--fb);font-weight:600;text-decoration:none;font-size:0.85rem">🐛 LA Invertebrates →</a><a href="https://lafungi.org" target="_blank" rel="noopener" style="color:var(--gold);font-family:var(--fb);font-weight:600;text-decoration:none;font-size:0.85rem">🍄 LA Fungi →</a><a href="https://la-fauna.org" target="_blank" rel="noopener" style="color:var(--gold);font-family:var(--fb);font-weight:600;text-decoration:none;font-size:0.85rem">🦎 LA Fauna →</a></div><a href="https://github.com/rhysmarsh/LA-flora" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;color:var(--gold);font-family:var(--fb);font-weight:600;text-decoration:none;font-size:0.95rem">Fork this on GitHub →</a></footer>
 <div class="mo hid" id="mOvr"><div class="mm"><div class="mmh"><div><div class="mmt" id="mTit"></div><div class="mms" id="mSub"></div></div><button class="mmc" id="mCl">&times;</button></div><div class="mc" id="mCon"></div><div class="mml"><a id="mLnk" href="#" target="_blank" rel="noopener noreferrer">Open in iNaturalist</a></div></div></div>
 <script>
 
@@ -504,6 +504,8 @@ const BUG_LINKS={
 "Sara Orangetip":"Anthocharis+sara","Cabbage White":"Pieris+rapae",
 "Variable Checkerspot":"Euphydryas+chalcedona","Cloudless Sulphur":"Phoebis+sennae",
 "Orange Skipperling":"Copaeodes+aurantiaca",
+"California Tortoiseshell":"Nymphalis+californica","Quino Checkerspot":"Euphydryas+editha+quino",
+"Mission Blue":"Icaricia+icarioides+missionensis",
 // Moths — species deep-links
 "White-lined Sphinx Moth":"Hyles+lineata","Tobacco Hornworm":"Manduca+sexta",
 "Yucca Moth":"Tegeticula+maculata","Western Tussock Moth":"Orgyia+vetusta",
@@ -513,14 +515,21 @@ const BUG_LINKS={
 const GROUP_LINKS={
 "bumble bee":"?search=bumble+bee","Bumble bee":"?search=bumble+bee","bumble bees":"?search=bumble+bee","Bumble bees":"?search=bumble+bee",
 "carpenter bee":"?search=carpenter+bee","Carpenter bee":"?search=carpenter+bee","carpenter bees":"?search=carpenter+bee","Carpenter bees":"?search=carpenter+bee",
-"native bee":"?search=bee","native bees":"?search=bee","Native bee":"?search=bee","Native bees":"?search=bee",
-"sweat bee":"?search=sweat+bee","sweat bees":"?search=sweat+bee","Sweat bee":"?search=sweat+bee",
-"mining bee":"?search=mining+bee","mining bees":"?search=mining+bee","Mining bee":"?search=mining+bee",
+"native bees":"?search=bee","Native bees":"?search=bee","native bee":"?search=bee","Native bee":"?search=bee",
+"solitary bees":"?search=bee","solitary bee":"?search=bee",
+"sweat bee":"?search=sweat+bee","sweat bees":"?search=sweat+bee","Sweat bee":"?search=sweat+bee","Sweat bees":"?search=sweat+bee",
+"mining bee":"?search=mining+bee","mining bees":"?search=mining+bee","Mining bee":"?search=mining+bee","Mining bees":"?search=mining+bee",
 "mason bee":"?search=mason+bee","Mason bee":"?search=mason+bee",
 "leafcutter bee":"?search=leafcutter","Leafcutter bee":"?search=leafcutter",
+"digger bee":"?search=digger","digger bees":"?search=digger",
+"squash bees":"?search=squash+bee","squash bee":"?search=squash+bee",
+"long-horned bee":"?search=long-horned","long-horned bees":"?search=long-horned",
 "hover fly":"?search=hover+fly","hover flies":"?search=hover+fly","hoverfly":"?search=hover+fly","hoverflies":"?search=hover+fly",
+"syrphid flies":"?search=hover+fly","syrphid":"?search=hover+fly",
+"bee flies":"?search=bee+fly","bee fly":"?search=bee+fly","Bombyliidae":"?search=bee+fly",
 "hawkmoth":"?search=sphinx","hawkmoths":"?search=sphinx","hawk moth":"?search=sphinx","hawk moths":"?search=sphinx",
-"ladybug":"?search=lady+beetle","ladybugs":"?search=lady+beetle"
+"sphinx moths":"?search=sphinx",
+"ladybug":"?search=lady+beetle","ladybugs":"?search=lady+beetle","lady beetle":"?search=lady+beetle"
 };
 for(const[cn,sn] of Object.entries(BUG_LINKS)){
 if(txt.includes(cn)){
@@ -531,6 +540,61 @@ for(const[term,hash] of Object.entries(GROUP_LINKS)){
 if(txt.includes(term)&&!txt.includes(`>${term}</a>`)){
 txt=txt.replace(new RegExp('(?<!>)'+term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'),
 `<a href="https://labugs.org${hash}" target="_blank" rel="noopener" style="color:var(--forest);text-decoration:underline;text-decoration-color:var(--gold)">${term}</a>`);
+}}
+// Bird species → All About Birds (Cornell Lab / Merlin)
+const BIRD_LINKS={
+"Acorn Woodpecker":"Acorn_Woodpecker","Nuttall's Woodpecker":"Nuttalls_Woodpecker",
+"Clark's Nutcracker":"Clarks_Nutcracker",
+"California Scrub-Jay":"California_Scrub-Jay","Western Scrub-Jay":"California_Scrub-Jay","Steller's Jay":"Stellers_Jay",
+"Band-tailed Pigeon":"Band-tailed_Pigeon","Mourning Dove":"Mourning_Dove",
+"Anna's Hummingbird":"Annas_Hummingbird","Allen's Hummingbird":"Allens_Hummingbird",
+"Costa's Hummingbird":"Costas_Hummingbird","Rufous Hummingbird":"Rufous_Hummingbird",
+"Calliope Hummingbird":"Calliope_Hummingbird",
+"Cedar Waxwing":"Cedar_Waxwing","Phainopepla":"Phainopepla","American Robin":"American_Robin",
+"California Quail":"California_Quail","Gambel's Quail":"Gambels_Quail",
+"California Towhee":"California_Towhee","Spotted Towhee":"Spotted_Towhee",
+"California Thrasher":"California_Thrasher","Northern Mockingbird":"Northern_Mockingbird",
+"American Goldfinch":"American_Goldfinch","Lesser Goldfinch":"Lesser_Goldfinch",
+"Coastal California Gnatcatcher":"California_Gnatcatcher","California Gnatcatcher":"California_Gnatcatcher",
+"Belding's Savannah Sparrow":"Savannah_Sparrow","Song Sparrow":"Song_Sparrow",
+"Cactus Wren":"Cactus_Wren","Bewick's Wren":"Bewicks_Wren",
+"Red-tailed Hawk":"Red-tailed_Hawk",
+"Greater Roadrunner":"Greater_Roadrunner","Hermit Thrush":"Hermit_Thrush",
+"White-breasted Nuthatch":"White-breasted_Nuthatch","Bushtit":"Bushtit"
+};
+for(const[bn,slug] of Object.entries(BIRD_LINKS)){
+if(txt.includes(bn)&&!txt.includes(`>${bn}</a>`)){
+txt=txt.replace(new RegExp(bn.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'),
+`<a href="https://www.allaboutbirds.org/guide/${slug}/overview" target="_blank" rel="noopener" style="color:#5D4037;text-decoration:underline;text-decoration-color:#8D6E63">${bn}</a>`);
+}}
+// Vertebrate wildlife → la-fauna.org
+const FAUNA_LINKS={
+"Mule Deer":"?search=mule+deer","Desert Tortoise":"?search=desert+tortoise",
+"California Ground Squirrel":"?search=ground+squirrel",
+"Western Fence Lizard":"?search=fence+lizard",
+"Southern Pacific Rattlesnake":"?search=rattlesnake",
+"Coast Horned Lizard":"?search=horned+lizard",
+"coyote":"?search=coyote","coyotes":"?search=coyote",
+"ground squirrel":"?search=ground+squirrel","ground squirrels":"?search=ground+squirrel",
+"gophers":"?search=gopher","gopher":"?search=gopher","pocket gopher":"?search=gopher",
+"desert tortoise":"?search=desert+tortoise",
+"bighorn sheep":"?search=bighorn","bighorn":"?search=bighorn",
+"bobcat":"?search=bobcat","mountain lion":"?search=mountain+lion",
+"gray fox":"?search=gray+fox",
+"woodrat":"?search=woodrat","packrat":"?search=woodrat",
+"pronghorn":"?search=pronghorn"
+};
+for(const[fn,fh] of Object.entries(FAUNA_LINKS)){
+if(txt.includes(fn)&&!txt.includes(`>${fn}</a>`)){
+txt=txt.replace(new RegExp(fn.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'),
+`<a href="https://la-fauna.org${fh}" target="_blank" rel="noopener" style="color:#2E7D32;text-decoration:underline;text-decoration-color:#66BB6A">${fn}</a>`);
+}}
+// Fungi associations → lafungi.org
+const FUNGI_LINKS={"mycorrhizal":"?search=mycorrhiz","mycorrhizae":"?search=mycorrhiz","ectomycorrhizal":"?search=mycorrhiz"};
+for(const[ft,fh] of Object.entries(FUNGI_LINKS)){
+if(txt.includes(ft)&&!txt.includes(`>${ft}</a>`)){
+txt=txt.replace(new RegExp(ft.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'),
+`<a href="https://lafungi.org${fh}" target="_blank" rel="noopener" style="color:#795548;text-decoration:underline;text-decoration-color:#A1887F">${ft}</a>`);
 }}
 return '<div class="ds-hp"><div class="ds-hp-label">Ecological Associations</div><div class="ds-hp-list">'+txt+'</div></div>';
 }
