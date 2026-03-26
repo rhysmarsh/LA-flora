@@ -5,7 +5,7 @@
 I'm building a suite of self-contained PWA field guides to the natural history of Los Angeles County. Three guides are live; more are planned. All share the same architecture, branding, and iNat API integration pattern. This prompt provides the context needed to:
 
 1. **Sync features between Plant Guide (la-flora.org v3.012) and Invertebrate Guide (labugs.org v3.023, 3,439 species)**
-2. **Create new guides** (next: la-fauna.org vertebrate guide) using the Plant Guide v3.014 as the template
+2. **Create new guides** (next: la-fauna.org vertebrate guide) using the Plant Guide v3.015 as the template
 3. **Maintain and expand existing guides** — cross-link ecosystem now spans 4 guide domains + All About Birds
 4. **Backport cross-link features** to labugs.org and lafungi.org
 
@@ -24,7 +24,7 @@ Single-file PWA for most guides. **Plant Guide v3+ uses two-file architecture** 
 - **Deploy**: Netlify drag-and-drop zip (index.html, sw.js, manifest.json, _headers, _redirects, icons/, and species-data.json for v3+ guides)
 - **File size**: Single-file architecture scales to ~600KB before performance concerns. Fungi guide reached 594KB at 567 species. Plant guide exceeded this at 824 species, triggering v3 migration.
 
-### v3 Two-File Architecture (Plant Guide v3.014+)
+### v3 Two-File Architecture (Plant Guide v3.015+)
 ```
 index.html          — 90 KB (CSS + JS code + config objects + filters + cross-links)
 species-data.json   — 1,082 KB (all SPECIES_DATA, loaded async)
@@ -38,7 +38,7 @@ icons/              — 5 production icons (128, 180, 192, 512, 1024px)
 - Loading overlay with branded spinner during async data fetch
 - Graceful error handling with cache fallback if network fails
 
-**Init chain (v3.014)**:
+**Init chain (v3.015)**:
 ```
 loadState() → register SW → loadSpeciesData() → [hydrateCache() → render() → checkDeepLink()] + fetchLL()
 ```
@@ -242,15 +242,15 @@ The `isopods` group (key retained for backward compat) is labeled "Crustaceans" 
 
 ## Guide 2: LA County Plant, Moss & Lichen Field Guide (la-flora.org)
 
-**Status**: v3.014 — deploy-ready, all quality checks passed, production icons installed
+**Status**: v3.015 — deploy-ready, all quality + desc consistency checks passed, production icons installed
 **Species**: 1,476 across 10 taxa groups (533 wildflowers, 105 trees, 391 shrubs, 162 grasses, 46 ferns, 35 cacti, 16 vines, 34 aquatic, 26 mosses, 128 lichens)
 **Architecture**: v3 two-file (index.html 90 KB + species-data.json 1,082 KB)
 **IDB name**: `plantGuidePhotos`
-**SW cache**: `la-plant-guide-v3.014`
+**SW cache**: `la-plant-guide-v3.015`
 **GitHub**: https://github.com/rhysmarsh/LA-flora
 **License**: GPL v3 + disclaimer
 
-This is the **template source** for all new guides. Fork v3.014 and adapt.
+This is the **template source** for all new guides. Fork v3.015 and adapt.
 
 ### Key Metrics
 - **1,476 species** (1,473 main + 3 ssp) | 10 taxa groups | v3 two-file architecture
@@ -289,7 +289,7 @@ Full audit run 2026-03-25: 908 research-grade species queried, 1,476 in guide.
 **Establishment breakdown**: 1,056 native / 371 introduced / 50 invasive
 **species-data.json**: 1,082 KB — capacity for ~3,000 spp at 2 MB
 
-### Ecological Enrichment Sources (v3.014)
+### Ecological Enrichment Sources (v3.015)
 Ecological associations verified against published sources:
 - **Pollinator**: Xerces Society CA pollinator lists, Las Pilitas butterfly-plant database, UC Riverside entomology, Art Shapiro butterfly database (UC Davis)
 - **Bird**: LA Audubon residential yard study (2022), eBird LA County, California Wildlife Habitat Relationships System (CWHR), California Chaparral Institute
@@ -298,7 +298,7 @@ Ecological associations verified against published sources:
 - **Conservation**: CNPS Rare Plant Program, USFWS Recovery Plans, CDFW SSC lists
 - **Sourced claims**: Jepson eFlora, UC Berkeley, UC Davis, Xerces Society, USFWS, USDA, Guinness
 
-### Ecological Enrichment Stopping Point (v3.014)
+### Ecological Enrichment Stopping Point (v3.015)
 Enrichment reached natural diminishing returns after ~12 iterative passes:
 - Remaining 213 native species without birds are mostly rare/uncommon small annuals where seed predation is undocumented
 - Remaining 100 species with generic "native bees" are mostly wind-pollinated grasses/sedges where bee mention should be removed rather than upgraded
@@ -319,10 +319,10 @@ Enrichment reached natural diminishing returns after ~12 iterative passes:
 - **INV/INTRO badges on photo cards**: `.badge-col` flex column stacks establishment pill above rarity pip (top-left), observed ✓ stays top-right. CSS: `.inv-pill` (red), `.intro-pill` (orange), `.badge-col` (flex column container)
 - **Cross-guide deep links to labugs.org**: `rHP()` replaces 38 butterfly/moth species names and ~15 bee/moth group terms with clickable `<a>` links. Species links use `?species=Scientific+name` deep-link format. Group links use `#groupKey` hash format. 465 plant species (32%) have at least one cross-link.
 - **Deep-link URL parser**: `findAndOpenSpecies(query)` searches all taxa groups by SN or CN, switches group, opens detail sheet. Triggered on init via `URLSearchParams`. This is the inbound handler — labugs v3.023 has `findAndOpenSpecies()` with NAME_ALIASES support for reclassified taxa.
-- **Taxa bar PWA fix (v3.014 — RESOLVED)**: Uses `top: var(--safe-top)` with NO padding or margin on the sticky taxa bar, plus a fixed `.notch-bg` div that fills the notch area with background color when the bar is stuck. This is the ONLY approach that works on iOS Safari PWA. See Build Lesson #22 for the full history of failed approaches and the working solution.
+- **Taxa bar PWA fix (v3.015 — RESOLVED)**: Uses `top: var(--safe-top)` with NO padding or margin on the sticky taxa bar, plus a fixed `.notch-bg` div that fills the notch area with background color when the bar is stuck. This is the ONLY approach that works on iOS Safari PWA. See Build Lesson #22 for the full history of failed approaches and the working solution.
 - **Intro mark / badge font fix**: `.intro-mark`, `.inv-pill`, `.intro-pill` all use `font-family:var(--fb);font-style:normal` to prevent italic serif inheritance from `.csn`
 
-### Taxonomy Scrub (v3.014)
+### Taxonomy Scrub (v3.015)
 Resolved during pre-publish audit:
 - **3 duplicates removed**: Pennisetum setaceum (=Cenchrus setaceus), Cheilanthes newberryi (=Myriopteris newberryi), Piperia cooperi (=Platanthera cooperi)
 - **1 duplicate removed**: Cenchrus clandestinus (renamed from Pennisetum clandestinum, collided with existing entry from gap audit)
@@ -380,7 +380,7 @@ Resolved during pre-publish audit:
 - **Edibility filter required code fix** — plant template had endemic filter logic (`'endemic'`/`'non-endemic'`) that never matched edibility chip values (`'edible'`/`'toxic'`/`'inedible'`). Chips highlighted but species never filtered. Must verify filter logic matches chip data-attributes when adapting template.
 - **isO life list matching** needed NAME_ALIASES integration — iNat reclassifications caused silent match failures.
 
-### Fungi Backport Priority (from Plant Guide v3.014)
+### Fungi Backport Priority (from Plant Guide v3.015)
 Features to backport from the plant guide to the fungi guide, in priority order:
 1. **v3 architecture migration** — fungi at 594KB is at single-file ceiling. Migrate to species-data.json + index.html for expansion headroom. Reuse plant guide migration script.
 2. **Establishment filter** — add `est` field (native/introduced) and filter UI. Most fungi are native but some (e.g., Agaricus bisporus, Coprinopsis atramentaria) are introduced. Tag all 567 species.
@@ -398,7 +398,7 @@ Desjardin/Wood/Stevens *California Mushrooms* (2015), Arora *Mushrooms Demystifi
 ## Guide 4: LA County Non-Avian Vertebrates Field Guide (NEW — to create)
 
 **Planned URL**: lawildlife.org
-**Template**: Fork from Plant Guide v3.014
+**Template**: Fork from Plant Guide v3.015
 **IDB name**: `vertGuidePhotos`
 **GitHub**: https://github.com/rhysmarsh/LA-vertebrates
 **iNat taxon IDs**: 26036 (Reptilia) + 20978 (Amphibia) + 40151 (Mammalia) + 47178 (Actinopterygii, freshwater only) | place_id: 962
@@ -485,7 +485,7 @@ Medium-sized guide — between herps-only (~70) and fungi (~567). Enough for dee
 ## Guide 5: LA County Marine Life Field Guide (NEW — to create)
 
 **Planned URL**: lamarine.org
-**Template**: Fork from Plant Guide v3.014 (v3 two-file architecture — marine species count will exceed 500)
+**Template**: Fork from Plant Guide v3.015 (v3 two-file architecture — marine species count will exceed 500)
 **IDB name**: `marineGuidePhotos`
 **GitHub**: https://github.com/rhysmarsh/LA-marine
 **iNat taxon IDs**: Multiple — 47115 (Mollusca), 47549 (Arthropoda marine subset), 47548 (Cnidaria), 47706 (Echinodermata), 47533 (Annelida), 47153 (Chordata marine fish), 48222 (Algae) | place_id: 962
@@ -549,7 +549,7 @@ Hinton *Seashore Life of Southern California* (1987), Gotshall *Guide to Marine 
 ## Build Workflow (for any guide)
 
 ### Creating a New Guide from Template
-1. Copy Plant Guide v3.014 `index.html` as starting point (for small guides, re-inline SPECIES_DATA if <500 species expected; for large guides, keep v3 two-file architecture)
+1. Copy Plant Guide v3.015 `index.html` as starting point (for small guides, re-inline SPECIES_DATA if <500 species expected; for large guides, keep v3 two-file architecture)
 2. **CRITICAL: Change `activeTaxon:'wildflowers'`** to first taxa group key (e.g., `'lizards'`)
 3. Find/replace: guide name, IDB name, SW cache name, canonical URL, OG tags, GitHub URL
 4. Replace SPECIES_DATA with new taxa
@@ -592,6 +592,13 @@ Hinton *Seashore Life of Southern California* (1987), Gotshall *Guide to Marine 
 - [ ] **isO life list function uses NAME_ALIASES** for reclassified taxa
 - [ ] **Node.js syntax validation passes** (`node -c` on extracted JS)
 - [ ] **Cross-reference verification complete** — names verified against iNat/ITIS
+- [ ] **0 redundant CN in desc** — desc must not restate the common name (it's already the card title)
+- [ ] **0 genus in CN parens** — "(Genus)" in CN is redundant with scientific name; only qualifier parens like "(Coast)" are valid
+- [ ] **0 "(Genus) (Family)" double-parens in desc** — only "(Family)" belongs in desc prefix
+- [ ] **0 desc-duplicating sentences in hp** — morphological descriptions belong in desc, not Ecological Associations
+- [ ] **0 lowercase desc starts** — sentences after "Non-native X (Family)." prefix must start uppercase
+- [ ] **0 dead cross-link entries** — every BUG_LINKS/BIRD_LINKS/FAUNA_LINKS/GROUP_LINKS key must match hp text
+- [ ] **Cross-group search preserves searchQuery** — "Also found in" buttons must NOT call saveT() (see Build Lesson #23)
 
 ### hp Ecological Associations — Proven 100% Coverage Methodology
 The plant guide achieved 100% species-specific hp coverage across 1,476 species using this multi-pass approach (reuse for all guides):
@@ -611,7 +618,7 @@ The plant guide achieved 100% species-specific hp coverage across 1,476 species 
 - **sw.js is a separate file** — must be updated manually. See Build Lesson #16.
 
 ### Build Lesson #16: sw.js Cache Name Must Sync with Version
-The service worker file (`sw.js`) contains a cache name string like `la-plant-guide-v3.014`. This lives **outside** `index.html` and is NOT updated by the standard version bump find/replace on the HTML. Failure to update sw.js causes the old service worker to serve stale cached content after deploy.
+The service worker file (`sw.js`) contains a cache name string like `la-plant-guide-v3.015`. This lives **outside** `index.html` and is NOT updated by the standard version bump find/replace on the HTML. Failure to update sw.js causes the old service worker to serve stale cached content after deploy.
 
 **v3 sw.js also caches species-data.json** — the ASSETS array must include it.
 
@@ -660,7 +667,7 @@ Both use regex replacement on the hp text string. Species links get `font-weight
 - `?search=search+term` — pre-fills search box, filters species grid (both guides)
 - `#species/Scientific_name` — legacy hash format for species deep-link
 
-**Four cross-link maps in `rHP()` (v3.014)**:
+**Four cross-link maps in `rHP()` (v3.015)**:
 - `BUG_LINKS`: 44 butterfly/moth species → `labugs.org?species=Danaus+plexippus` (species deep-link)
 - `GROUP_LINKS`: 29 pollinator group terms → `labugs.org?search=bumble+bee` (filtered search). All lowercase to match hp text.
 - `BIRD_LINKS`: 86 bird species → `allaboutbirds.org/guide/Species_Name/overview` (Cornell Lab / Merlin)
@@ -670,7 +677,7 @@ Both use regex replacement on the hp text string. Species links get `font-weight
 **Cross-link map maintenance (Build Lesson #20)**:
 - All link map entries must match EXACT text in hp notes (case-sensitive)
 - Run `count_alive()` audit before every deploy — dead entries waste rendering cycles and confuse maintenance
-- The v3.011→v3.014 cross-link audit found 39 dead entries from case mismatches (e.g., FAUNA_LINKS had lowercase "ground squirrel" but hp text used "California Ground Squirrel"). All fixed in v3.014.
+- The v3.011→v3.015 cross-link audit found 39 dead entries from case mismatches (e.g., FAUNA_LINKS had lowercase "ground squirrel" but hp text used "California Ground Squirrel"). All fixed in v3.015.
 - GROUP_LINKS entries must use lowercase (hp text says "bumble bees" not "Bumble bees")
 - FAUNA_LINKS entries must use proper capitalization (hp text says "Bobcat" not "bobcat")
 
@@ -710,9 +717,9 @@ def count_alive(html, map_name, all_hp):
 3. Speculative additions — species added to map before any plant hp mentions it
 4. Dedup removed the only hp sentence containing the linked term
 
-**v3.014 lesson**: Generic FUNGI_LINKS matching "mycorrhiz" were removed entirely because "Ectomycorrhizal with native fungi" is too generic for a useful link. Only add links when the target page would provide meaningful information.
+**v3.015 lesson**: Generic FUNGI_LINKS matching "mycorrhiz" were removed entirely because "Ectomycorrhizal with native fungi" is too generic for a useful link. Only add links when the target page would provide meaningful information.
 
-### Build Lesson #21: Ecological Enrichment Methodology (v3.014)
+### Build Lesson #21: Ecological Enrichment Methodology (v3.015)
 The plant guide achieved deep ecological coverage through ~12 iterative passes:
 
 **Pass sequence (proven workflow):**
@@ -748,7 +755,7 @@ When a user searches and results span multiple taxa groups, the "Also found in: 
 
 **Root cause**: `saveT()` resets ALL state including `searchQuery=''`. The "Also found in" button called `saveT()` then `render()`, which cleared the search.
 
-**Fix (v3.014)**: Replace `saveT()` call in the "Also found in" onclick with direct state mutation that preserves the search:
+**Fix (v3.014)**: Replace `saveT()` call in the "Also found in" onclick with direct state mutation:
 ```javascript
 // OLD — clears search:
 onclick="saveT('${m.taxon}');render()"
@@ -757,11 +764,34 @@ onclick="saveT('${m.taxon}');render()"
 onclick="state.activeTaxon='${m.taxon}';try{location.hash='${m.taxon}'}catch(e){};render()"
 ```
 
-This sets `activeTaxon` and updates the URL hash without touching `searchQuery`, `statusFilter`, `familyFilter`, or any other filter state. The user's search persists across group switches.
+**Backport required**: This same bug exists in **labugs.org** and **lafungi.org** — any guide using `saveT()` in cross-group navigation buttons needs this fix.
 
-**Backport required**: This same bug exists in **labugs.org** and **lafungi.org** — any guide using `saveT()` in cross-group navigation buttons needs this fix. Search for `saveT` in "Also found in" or cross-group click handlers and replace with direct `state.activeTaxon` assignment.
+### Build Lesson #24: Species Card Desc Quality Standards (v3.015)
+The `desc` field appears directly below the `cn` (common name) on the species card. Quality standards established after finding systematic issues across 300+ cards:
 
-### Build Lesson #22: iOS Safari Sticky Elements + Safe Area (RESOLVED v3.014)
+1. **Never restate the CN** — it's already the card title. `"Black Sage (Lamiaceae). Black sage — aromatic..."` → strip "Black sage —"
+2. **Never include genus in parens in CN** — `"Red Firedot Lichen (Polycauliona)"` → remove "(Polycauliona)". The genus is in the scientific name. Only qualifier parens like "(Coast)" are valid.
+3. **No "(Genus) (Family)" double-parens in desc** — remove "(Genus)", keep "(Family)"
+4. **Sentences after prefix must start uppercase** — "Non-native X (Family). lowercase..." → capitalize
+5. **Morphological descriptions belong in desc, not hp** — if an hp sentence is >60% word overlap with desc, remove it from hp
+6. **"Also found in" buttons must preserve searchQuery** — see Build Lesson #23
+
+**Audit script** (run before every deploy):
+```python
+# CN repeated in desc
+m = re.match(r'^(?:Non-native|Invasive)?\s*[^.]+\([^)]+\)\.\s*(.*)', desc)
+if m and m.group(1).lower().startswith(cn.lower()): # fix needed
+
+# Genus in CN
+if re.search(r'\(([A-Z][a-z]+)\)$', cn) and sp['sn'].startswith(match): # fix needed
+
+# Desc-duplicating hp sentences (>60% word overlap)
+s_words = set(re.findall(r'\w{4,}', sentence.lower()))
+d_words = set(re.findall(r'\w{4,}', desc.lower()))
+if len(s_words & d_words) / len(s_words) > 0.6: # remove from hp
+```
+
+### Build Lesson #22: iOS Safari Sticky Elements + Safe Area (RESOLVED v3.015)
 On iOS Safari PWA (`viewport-fit: cover`), sticky elements that need to account for the Dynamic Island / notch safe area require a specific pattern. **Multiple approaches were tried and failed before finding the working solution.**
 
 **FAILED approaches (do NOT use):**
@@ -777,7 +807,7 @@ On iOS Safari PWA (`viewport-fit: cover`), sticky elements that need to account 
 ```
 All of these create a visible cream-colored gap between the header and taxa bar on initial page load (before scrolling). The gap matches the safe-area-inset-top height (~59px on Dynamic Island iPhones). The negative margin/top is supposed to pull the element back up to compensate for the padding, but iOS Safari doesn't honor this on sticky elements.
 
-**WORKING solution (v3.014):**
+**WORKING solution (v3.015):**
 ```css
 /* ✅ No padding, no margin — just top offset for sticky positioning */
 .tbar { position: sticky; top: var(--safe-top); z-index: 50; }
@@ -824,13 +854,13 @@ The observed ✓ checkmark stays `position:absolute; top:6px; right:6px` indepen
 ## Guide 5: LA County Vertebrate Field Guide (la-fauna.org)
 
 **Status**: Planned — domain reserved, not yet built
-**Template**: Fork from Plant Guide v3.014 (v3 two-file architecture)
+**Template**: Fork from Plant Guide v3.015 (v3 two-file architecture)
 **Estimated species**: ~350 (mammals ~90, reptiles ~60, amphibians ~20, freshwater fish ~40, marine shore fish ~20, marine mammals ~20)
 **IDB name**: `faunaGuidePhotos`
 **GitHub**: https://github.com/rhysmarsh/LA-fauna
 
 ### Cross-link integration (already seeded)
-The plant guide (v3.014) already contains `FAUNA_LINKS` map with 42 terms linking to `la-fauna.org?search=term`. When la-fauna.org launches with `findAndOpenSpecies()` and `?search=` handler, these links will work immediately.
+The plant guide (v3.015) already contains `FAUNA_LINKS` map with 42 terms linking to `la-fauna.org?search=term`. When la-fauna.org launches with `findAndOpenSpecies()` and `?search=` handler, these links will work immediately.
 
 Plant guide hp notes reference 281 species (19%) with named mammals/herps including: Mule Deer, Western Gray Squirrel, California Ground Squirrel, Botta's Pocket Gopher, Desert Cottontail, Brush Rabbit, American Black Bear, Mountain Lion, Bobcat, Gray Fox, Dusky-footed Woodrat, Desert Woodrat, Merriam's Chipmunk, California Vole, Ringtail, Striped Skunk, Desert Bighorn Sheep, Western Yellow Bat, Mexican Free-tailed Bat, Pallid Bat, Southern Pacific Rattlesnake, California Kingsnake, Coast Horned Lizard, Western Fence Lizard, Pacific Tree Frog, California Newt, Arroyo Toad, Coastal Rosy Boa, and more — all linking to la-fauna.org.
 
