@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<title>LA County Plant, Moss & Lichen Field Guide — v3.011</title>
+<title>LA County Plant, Moss & Lichen Field Guide — v3.013</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,11 +22,11 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--fb);background:var(--cream);color:#333;-webkit-font-smoothing:antialiased;overscroll-behavior-y:none;padding-bottom:var(--safe-bot);padding-left:var(--safe-l);padding-right:var(--safe-r)}
 button{font-family:inherit;cursor:pointer}input{font-family:inherit}
-.hdr{background:linear-gradient(160deg,var(--forest),var(--forest-deep));padding:22px 16px 14px;padding-top:calc(22px + var(--safe-top));color:#fff;position:relative;overflow:hidden}
+.hdr{background:linear-gradient(160deg,var(--forest),var(--forest-deep));padding:22px 16px 14px;padding-top:calc(22px + var(--safe-top));color:#fff;position:relative;overflow:hidden;margin:0}
 .hdr::after{content:'';position:absolute;top:-30%;right:-10%;width:200px;height:200px;background:radial-gradient(circle,rgba(191,164,110,0.08),transparent 70%);border-radius:50%;pointer-events:none}
-.hdr h1{font-family:var(--fd);font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-0.01em;position:relative}
-.hdr .sub{font-size:12px;margin-top:4px;opacity:0.55;font-weight:500;position:relative}
-.tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:0;z-index:50;padding-top:env(safe-area-inset-top,0px);margin-top:calc(-1 * env(safe-area-inset-top,0px))}
+.hdr h1{font-family:var(--fd);font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-0.01em;margin:0;position:relative}
+.hdr .sub{font-size:12px;margin-top:4px;margin-bottom:0;opacity:0.55;font-weight:500;position:relative}
+.tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:0;z-index:50;padding-top:var(--safe-top);margin-top:calc(-1 * var(--safe-top))}
 .tbar::-webkit-scrollbar{display:none}
 .ttab{flex:1 0 auto;min-width:52px;padding:8px 6px 6px;background:none;border:none;border-bottom:3px solid transparent;display:flex;flex-direction:column;align-items:center;gap:1px;opacity:0.42;transition:all 0.25s}
 .ttab.active{opacity:1;border-bottom-color:var(--forest)}.ttab .em{font-size:18px;line-height:1.1}
@@ -190,11 +190,11 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <meta name="robots" content="index, follow">
 <meta name="author" content="Rhys Marsh">
 <meta name="keywords" content="LA County plants, Los Angeles wildflowers, California native plants, plant field guide, Southern California flora, LA hiking plants, native plant identification, bloom times, iNaturalist, mosses, lichens, ferns, cacti, trees, shrubs, grasses, PWA field guide">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.011","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.013","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
 </head>
 <body>
 <div class="ld-ovr" id="ldOvr"><div class="ld-spin"></div><div class="ld-txt">Loading species data…</div></div>
-<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.011</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
+<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.013</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
 <nav class="tbar" id="tBar"></nav>
 <main class="cnt">
 <div class="llb" id="llBar"></div>
@@ -500,16 +500,15 @@ const BUG_LINKS={
 "Spring Azure":"Celastrina+ladon","El Segundo Blue":"Euphilotes+battoides+allyni",
 "Bramble Hairstreak":"Callophrys+dumetorum","Common Checkered Skipper":"Burnsius+communis",
 "Chalcedon Checkerspot":"Euphydryas+chalcedona","Gulf Fritillary":"Dione+vanillae",
-"Marine Blue":"Leptotes+marina","Fiery Skipper":"Hylephila+phyleus",
-"Sara Orangetip":"Anthocharis+sara","Cabbage White":"Pieris+rapae",
-"Variable Checkerspot":"Euphydryas+chalcedona","Cloudless Sulphur":"Phoebis+sennae",
-"Orange Skipperling":"Copaeodes+aurantiaca",
+"Marine Blue":"Leptotes+marina","Sara Orangetip":"Anthocharis+sara","Cabbage White":"Pieris+rapae",
 "California Tortoiseshell":"Nymphalis+californica","Quino Checkerspot":"Euphydryas+editha+quino",
 "Mission Blue":"Icaricia+icarioides+missionensis",
 // Moths — species deep-links
 "White-lined Sphinx Moth":"Hyles+lineata","Tobacco Hornworm":"Manduca+sexta",
 "Yucca Moth":"Tegeticula+maculata","Western Tussock Moth":"Orgyia+vetusta",
-"Sphinx Moth":"Hyles+lineata","Hawk Moth":"Hyles+lineata",
+"Sphinx Moth":"Hyles+lineata","Western Tent Caterpillar":"Malacosoma+californicum",
+"Hedgerow Hairstreak":"Callophrys+gryneus",
+"Mournful Duskywing":"Erynnis+tristis",
 "Painted Tiger Moth":"Arachnis+picta",
 "Ceanothus Silk Moth":"Hyalophora+euryalus",
 "Elegant Sheep Moth":"Hemileuca+eglanterina",
@@ -518,24 +517,13 @@ const BUG_LINKS={
 };
 // Group-level links — open companion app filtered by search term
 const GROUP_LINKS={
-"bumble bee":"?search=bumble+bee","Bumble bee":"?search=bumble+bee","bumble bees":"?search=bumble+bee","Bumble bees":"?search=bumble+bee",
-"carpenter bee":"?search=carpenter+bee","Carpenter bee":"?search=carpenter+bee","carpenter bees":"?search=carpenter+bee","Carpenter bees":"?search=carpenter+bee",
-"native bees":"?search=bee","Native bees":"?search=bee","native bee":"?search=bee","Native bee":"?search=bee",
-"solitary bees":"?search=bee","solitary bee":"?search=bee",
-"sweat bee":"?search=sweat+bee","sweat bees":"?search=sweat+bee","Sweat bee":"?search=sweat+bee","Sweat bees":"?search=sweat+bee",
-"mining bee":"?search=mining+bee","mining bees":"?search=mining+bee","Mining bee":"?search=mining+bee","Mining bees":"?search=mining+bee",
-"mason bee":"?search=mason+bee","Mason bee":"?search=mason+bee",
-"leafcutter bee":"?search=leafcutter","Leafcutter bee":"?search=leafcutter",
-"digger bee":"?search=digger","digger bees":"?search=digger",
-"squash bees":"?search=squash+bee","squash bee":"?search=squash+bee",
-"long-horned bee":"?search=long-horned","long-horned bees":"?search=long-horned",
-"hover fly":"?search=hover+fly","hover flies":"?search=hover+fly","hoverfly":"?search=hover+fly","hoverflies":"?search=hover+fly",
+"bumble bee":"?search=bumble+bee","Bumble bee":"?search=bumble+bee","bumble bees":"?search=bumble+bee","carpenter bee":"?search=carpenter+bee","carpenter bees":"?search=carpenter+bee","native bees":"?search=bee","native bee":"?search=bee","solitary bees":"?search=bee","solitary bee":"?search=bee",
+"sweat bee":"?search=sweat+bee","sweat bees":"?search=sweat+bee","mining bee":"?search=mining+bee","mining bees":"?search=mining+bee","mason bee":"?search=mason+bee","squash bees":"?search=squash+bee","squash bee":"?search=squash+bee",
+"sphinx moth":"?search=sphinx","hover flies":"?search=hover+fly","hoverflies":"?search=hover+fly",
 "syrphid flies":"?search=hover+fly","syrphid":"?search=hover+fly",
-"bee flies":"?search=bee+fly","bee fly":"?search=bee+fly","Bombyliidae":"?search=bee+fly",
+"bee flies":"?search=bee+fly","Bombyliidae":"?search=bee+fly",
 "hawkmoth":"?search=sphinx","hawkmoths":"?search=sphinx","hawk moth":"?search=sphinx","hawk moths":"?search=sphinx",
-"sphinx moths":"?search=sphinx",
-"ladybug":"?search=lady+beetle","ladybugs":"?search=lady+beetle","lady beetle":"?search=lady+beetle"
-};
+"ladybug":"?search=lady+beetle","ladybugs":"?search=lady+beetle"};
 for(const[cn,sn] of Object.entries(BUG_LINKS)){
 if(txt.includes(cn)){
 txt=txt.replace(new RegExp(cn.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'),
@@ -554,7 +542,6 @@ const BIRD_LINKS={
 "Band-tailed Pigeon":"Band-tailed_Pigeon","Mourning Dove":"Mourning_Dove",
 "Anna's Hummingbird":"Annas_Hummingbird","Allen's Hummingbird":"Allens_Hummingbird",
 "Costa's Hummingbird":"Costas_Hummingbird","Rufous Hummingbird":"Rufous_Hummingbird",
-"Calliope Hummingbird":"Calliope_Hummingbird",
 "Cedar Waxwing":"Cedar_Waxwing","Phainopepla":"Phainopepla","American Robin":"American_Robin",
 "California Quail":"California_Quail","Gambel's Quail":"Gambels_Quail",
 "California Towhee":"California_Towhee","Spotted Towhee":"Spotted_Towhee",
@@ -565,11 +552,15 @@ const BIRD_LINKS={
 "Cactus Wren":"Cactus_Wren","Bewick's Wren":"Bewicks_Wren",
 "Red-tailed Hawk":"Red-tailed_Hawk",
 "Greater Roadrunner":"Greater_Roadrunner","Hermit Thrush":"Hermit_Thrush",
-"White-breasted Nuthatch":"White-breasted_Nuthatch","Bushtit":"Bushtit",
+"Bushtit":"Bushtit",
 "Red Crossbill":"Red_Crossbill",
 "Northern Flicker":"Northern_Flicker",
 "House Finch":"House_Finch",
 "White-crowned Sparrow":"White-crowned_Sparrow",
+"Black-tailed Gnatcatcher":"Black-tailed_Gnatcatcher",
+"Great Blue Heron":"Great_Blue_Heron",
+"Virginia Rail":"Virginia_Rail",
+"American Bittern":"American_Bittern",
 "Mountain Chickadee":"Mountain_Chickadee",
 "Grasshopper Sparrow":"Grasshopper_Sparrow",
 "Great Horned Owl":"Great_Horned_Owl",
@@ -586,7 +577,6 @@ const BIRD_LINKS={
 "Barn Owl":"Barn_Owl",
 "House Wren":"House_Wren",
 "Red-breasted Sapsucker":"Red-breasted_Sapsucker",
-"Pine Siskin":"Pine_Siskin",
 "Wilson's Warbler":"Wilsons_Warbler",
 "Yellow Warbler":"Yellow_Warbler",
 "Marsh Wren":"Marsh_Wren",
@@ -630,19 +620,15 @@ const FAUNA_LINKS={
 "Southern Pacific Rattlesnake":"?search=rattlesnake",
 "Coast Horned Lizard":"?search=horned+lizard",
 "coyote":"?search=coyote","coyotes":"?search=coyote",
-"ground squirrel":"?search=ground+squirrel","ground squirrels":"?search=ground+squirrel",
-"gophers":"?search=gopher","gopher":"?search=gopher","pocket gopher":"?search=gopher",
-"desert tortoise":"?search=desert+tortoise",
-"bighorn sheep":"?search=bighorn","bighorn":"?search=bighorn",
-"bobcat":"?search=bobcat","mountain lion":"?search=mountain+lion",
-"gray fox":"?search=gray+fox",
 "woodrat":"?search=woodrat","packrat":"?search=woodrat",
-"pronghorn":"?search=pronghorn",
 "banana slug":"?search=banana+slug",
 "Pacific Giant Salamander":"?search=giant+salamander",
 "Western Pond Turtle":"?search=pond+turtle",
+"Desert Bighorn Sheep":"?search=bighorn",
+"Pronghorn":"?search=pronghorn",
+"Gray Fox":"?search=gray+fox",
+"Bobcat":"?search=bobcat",
 "Desert Night Lizard":"?search=night+lizard",
-"Ringtail":"?search=ringtail",
 "Gilbert's Skink":"?search=skink",
 "Western Toad":"?search=toad",
 "Brush Rabbit":"?search=brush+rabbit",
