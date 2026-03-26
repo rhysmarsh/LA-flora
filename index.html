@@ -26,7 +26,8 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 .hdr::after{content:'';position:absolute;top:-30%;right:-10%;width:200px;height:200px;background:radial-gradient(circle,rgba(191,164,110,0.08),transparent 70%);border-radius:50%;pointer-events:none}
 .hdr h1{font-family:var(--fd);font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-0.01em;margin:0;position:relative}
 .hdr .sub{font-size:12px;margin-top:4px;margin-bottom:0;opacity:0.55;font-weight:500;position:relative}
-.tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:0;z-index:50;padding-top:var(--safe-top);margin-top:calc(-1 * var(--safe-top))}
+.tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:var(--safe-top);z-index:50}
+.notch-bg{position:fixed;top:0;left:0;right:0;height:var(--safe-top);background:var(--cream);z-index:49;pointer-events:none}
 .tbar::-webkit-scrollbar{display:none}
 .ttab{flex:1 0 auto;min-width:52px;padding:8px 6px 6px;background:none;border:none;border-bottom:3px solid transparent;display:flex;flex-direction:column;align-items:center;gap:1px;opacity:0.42;transition:all 0.25s}
 .ttab.active{opacity:1;border-bottom-color:var(--forest)}.ttab .em{font-size:18px;line-height:1.1}
@@ -195,6 +196,7 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <body>
 <div class="ld-ovr" id="ldOvr"><div class="ld-spin"></div><div class="ld-txt">Loading species data…</div></div>
 <header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.013</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
+<div class="notch-bg"></div>
 <nav class="tbar" id="tBar"></nav>
 <main class="cnt">
 <div class="llb" id="llBar"></div>
@@ -659,13 +661,7 @@ if(txt.includes(fn)&&!txt.includes(`>${fn}</a>`)){
 txt=txt.replace(new RegExp(fn.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'),
 `<a href="https://la-fauna.org${fh}" target="_blank" rel="noopener" style="color:#2E7D32;text-decoration:underline;text-decoration-color:#66BB6A">${fn}</a>`);
 }}
-// Fungi associations → lafungi.org
-const FUNGI_LINKS={"mycorrhizal":"?search=mycorrhiz","mycorrhizae":"?search=mycorrhiz","ectomycorrhizal":"?search=mycorrhiz"};
-for(const[ft,fh] of Object.entries(FUNGI_LINKS)){
-if(txt.includes(ft)&&!txt.includes(`>${ft}</a>`)){
-txt=txt.replace(new RegExp(ft.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'g'),
-`<a href="https://lafungi.org${fh}" target="_blank" rel="noopener" style="color:#795548;text-decoration:underline;text-decoration-color:#A1887F">${ft}</a>`);
-}}
+
 return '<div class="ds-hp"><div class="ds-hp-label">Ecological Associations</div><div class="ds-hp-list">'+txt+'</div></div>';
 }
 
