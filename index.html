@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<title>LA County Plant, Moss & Lichen Field Guide — v3.010</title>
+<title>LA County Plant, Moss & Lichen Field Guide — v3.011</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -190,11 +190,11 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <meta name="robots" content="index, follow">
 <meta name="author" content="Rhys Marsh">
 <meta name="keywords" content="LA County plants, Los Angeles wildflowers, California native plants, plant field guide, Southern California flora, LA hiking plants, native plant identification, bloom times, iNaturalist, mosses, lichens, ferns, cacti, trees, shrubs, grasses, PWA field guide">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.010","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.011","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
 </head>
 <body>
 <div class="ld-ovr" id="ldOvr"><div class="ld-spin"></div><div class="ld-txt">Loading species data…</div></div>
-<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.010</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
+<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.011</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
 <nav class="tbar" id="tBar"></nav>
 <main class="cnt">
 <div class="llb" id="llBar"></div>
@@ -509,7 +509,12 @@ const BUG_LINKS={
 // Moths — species deep-links
 "White-lined Sphinx Moth":"Hyles+lineata","Tobacco Hornworm":"Manduca+sexta",
 "Yucca Moth":"Tegeticula+maculata","Western Tussock Moth":"Orgyia+vetusta",
-"Sphinx Moth":"Hyles+lineata","Hawk Moth":"Hyles+lineata"
+"Sphinx Moth":"Hyles+lineata","Hawk Moth":"Hyles+lineata",
+"Painted Tiger Moth":"Arachnis+picta",
+"Ceanothus Silk Moth":"Hyalophora+euryalus",
+"Elegant Sheep Moth":"Hemileuca+eglanterina",
+"Polyphemus Moth":"Antheraea+polyphemus",
+"California Oak Moth":"Phryganidia+californica"
 };
 // Group-level links — open companion app filtered by search term
 const GROUP_LINKS={
@@ -560,7 +565,57 @@ const BIRD_LINKS={
 "Cactus Wren":"Cactus_Wren","Bewick's Wren":"Bewicks_Wren",
 "Red-tailed Hawk":"Red-tailed_Hawk",
 "Greater Roadrunner":"Greater_Roadrunner","Hermit Thrush":"Hermit_Thrush",
-"White-breasted Nuthatch":"White-breasted_Nuthatch","Bushtit":"Bushtit"
+"White-breasted Nuthatch":"White-breasted_Nuthatch","Bushtit":"Bushtit",
+"Red Crossbill":"Red_Crossbill",
+"Northern Flicker":"Northern_Flicker",
+"House Finch":"House_Finch",
+"White-crowned Sparrow":"White-crowned_Sparrow",
+"Mountain Chickadee":"Mountain_Chickadee",
+"Grasshopper Sparrow":"Grasshopper_Sparrow",
+"Great Horned Owl":"Great_Horned_Owl",
+"Red-shouldered Hawk":"Red-shouldered_Hawk",
+"Fox Sparrow":"Fox_Sparrow",
+"American Dipper":"American_Dipper",
+"American Coot":"American_Coot",
+"Mountain Quail":"Mountain_Quail",
+"Red-winged Blackbird":"Red-winged_Blackbird",
+"Western Tanager":"Western_Tanager",
+"White-headed Woodpecker":"White-headed_Woodpecker",
+"Say's Phoebe":"Says_Phoebe",
+"American Kestrel":"American_Kestrel",
+"Barn Owl":"Barn_Owl",
+"House Wren":"House_Wren",
+"Red-breasted Sapsucker":"Red-breasted_Sapsucker",
+"Pine Siskin":"Pine_Siskin",
+"Wilson's Warbler":"Wilsons_Warbler",
+"Yellow Warbler":"Yellow_Warbler",
+"Marsh Wren":"Marsh_Wren",
+"Common Yellowthroat":"Common_Yellowthroat",
+"Burrowing Owl":"Burrowing_Owl",
+"Loggerhead Shrike":"Loggerhead_Shrike",
+"Lark Sparrow":"Lark_Sparrow",
+"Verdin":"Verdin",
+"Orange-crowned Warbler":"Orange-crowned_Warbler",
+"Yellow-rumped Warbler":"Yellow-rumped_Warbler",
+"Bullock's Oriole":"Bullocks_Oriole",
+"Black-headed Grosbeak":"Black-headed_Grosbeak",
+"Western Screech-Owl":"Western_Screech-Owl",
+"Scott's Oriole":"Scotts_Oriole",
+"Western Meadowlark":"Western_Meadowlark",
+"Horned Lark":"Horned_Lark",
+"Black-throated Sparrow":"Black-throated_Sparrow",
+"Le Conte's Thrasher":"Le_Contes_Thrasher",
+"Lazuli Bunting":"Lazuli_Bunting",
+"Cooper's Hawk":"Coopers_Hawk",
+"Ash-throated Flycatcher":"Ash-throated_Flycatcher",
+"Black Phoebe":"Black_Phoebe",
+"Dark-eyed Junco":"Dark-eyed_Junco",
+"Western Bluebird":"Western_Bluebird",
+"Hooded Oriole":"Hooded_Oriole",
+"Rufous-crowned Sparrow":"Rufous-crowned_Sparrow",
+"Lawrence's Goldfinch":"Lawrences_Goldfinch",
+"Oak Titmouse":"Oak_Titmouse",
+"Wrentit":"Wrentit"
 };
 for(const[bn,slug] of Object.entries(BIRD_LINKS)){
 if(txt.includes(bn)&&!txt.includes(`>${bn}</a>`)){
@@ -582,7 +637,36 @@ const FAUNA_LINKS={
 "bobcat":"?search=bobcat","mountain lion":"?search=mountain+lion",
 "gray fox":"?search=gray+fox",
 "woodrat":"?search=woodrat","packrat":"?search=woodrat",
-"pronghorn":"?search=pronghorn"
+"pronghorn":"?search=pronghorn",
+"banana slug":"?search=banana+slug",
+"Pacific Giant Salamander":"?search=giant+salamander",
+"Western Pond Turtle":"?search=pond+turtle",
+"Desert Night Lizard":"?search=night+lizard",
+"Ringtail":"?search=ringtail",
+"Gilbert's Skink":"?search=skink",
+"Western Toad":"?search=toad",
+"Brush Rabbit":"?search=brush+rabbit",
+"California Vole":"?search=vole",
+"California Treefrog":"?search=treefrog",
+"Gopher Snake":"?search=gopher+snake",
+"Coastal Rosy Boa":"?search=rosy+boa",
+"Arroyo Toad":"?search=arroyo+toad",
+"California Newt":"?search=newt",
+"Pacific Tree Frog":"?search=tree+frog",
+"Western Whiptail":"?search=whiptail",
+"Southern Alligator Lizard":"?search=alligator+lizard",
+"California Kingsnake":"?search=kingsnake",
+"Striped Skunk":"?search=skunk",
+"Desert Woodrat":"?search=woodrat",
+"Mexican Free-tailed Bat":"?search=free-tailed+bat",
+"Pallid Bat":"?search=pallid+bat",
+"Dusky-footed Woodrat":"?search=woodrat",
+"Mountain Lion":"?search=mountain+lion",
+"Merriam's Chipmunk":"?search=chipmunk",
+"American Black Bear":"?search=black+bear",
+"Desert Cottontail":"?search=cottontail",
+"Botta's Pocket Gopher":"?search=pocket+gopher",
+"Western Gray Squirrel":"?search=gray+squirrel"
 };
 for(const[fn,fh] of Object.entries(FAUNA_LINKS)){
 if(txt.includes(fn)&&!txt.includes(`>${fn}</a>`)){
