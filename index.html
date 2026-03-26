@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<title>LA County Plant, Moss & Lichen Field Guide — v3.013</title>
+<title>LA County Plant, Moss & Lichen Field Guide — v3.014</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -191,11 +191,11 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <meta name="robots" content="index, follow">
 <meta name="author" content="Rhys Marsh">
 <meta name="keywords" content="LA County plants, Los Angeles wildflowers, California native plants, plant field guide, Southern California flora, LA hiking plants, native plant identification, bloom times, iNaturalist, mosses, lichens, ferns, cacti, trees, shrubs, grasses, PWA field guide">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.013","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.014","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
 </head>
 <body>
 <div class="ld-ovr" id="ldOvr"><div class="ld-spin"></div><div class="ld-txt">Loading species data…</div></div>
-<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.013</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
+<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.014</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
 <div class="notch-bg"></div>
 <nav class="tbar" id="tBar"></nav>
 <main class="cnt">
@@ -439,7 +439,7 @@ const otherMatches=[];
 for(const k of TAXA_ORDER){if(k===state.activeTaxon)continue;
 const matches=(SPECIES_DATA[k]||[]).filter(s=>s.cn.toLowerCase().includes(q)||s.sn.toLowerCase().includes(q));
 if(matches.length)otherMatches.push({taxon:k,count:matches.length,emoji:TAXA[k].emoji,label:TAXA[k].label});}
-if(otherMatches.length){xtrHtml=`<div class="xtr">Also found in: ${otherMatches.map(m=>`<button onclick="saveT('${m.taxon}');render()" style="background:none;border:none;color:var(--forest);font-weight:600;text-decoration:underline;cursor:pointer;font-size:11px">${m.emoji} ${m.label} (${m.count})</button>`).join(' · ')}</div>`;}}
+if(otherMatches.length){xtrHtml=`<div class="xtr">Also found in: ${otherMatches.map(m=>`<button onclick="state.activeTaxon='${m.taxon}';try{location.hash='${m.taxon}'}catch(e){};render()" style="background:none;border:none;color:var(--forest);font-weight:600;text-decoration:underline;cursor:pointer;font-size:11px">${m.emoji} ${m.label} (${m.count})</button>`).join(' · ')}</div>`;}}
 // Suppress standalone ssp cards — they render bundled on parent
 const mainList=list.filter(s=>!s.ssp);
 if(!mainList.length&&!xtrHtml){cont.innerHTML=`<div class="es">No species match your filters.</div>`;return;}
@@ -503,9 +503,7 @@ const BUG_LINKS={
 "Bramble Hairstreak":"Callophrys+dumetorum","Common Checkered Skipper":"Burnsius+communis",
 "Chalcedon Checkerspot":"Euphydryas+chalcedona","Gulf Fritillary":"Dione+vanillae",
 "Marine Blue":"Leptotes+marina","Sara Orangetip":"Anthocharis+sara","Cabbage White":"Pieris+rapae",
-"California Tortoiseshell":"Nymphalis+californica","Quino Checkerspot":"Euphydryas+editha+quino",
-"Mission Blue":"Icaricia+icarioides+missionensis",
-// Moths — species deep-links
+"California Tortoiseshell":"Nymphalis+californica",// Moths — species deep-links
 "White-lined Sphinx Moth":"Hyles+lineata","Tobacco Hornworm":"Manduca+sexta",
 "Yucca Moth":"Tegeticula+maculata","Western Tussock Moth":"Orgyia+vetusta",
 "Sphinx Moth":"Hyles+lineata","Western Tent Caterpillar":"Malacosoma+californicum",
