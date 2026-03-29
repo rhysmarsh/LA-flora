@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<title>LA County Plant, Moss & Lichen Field Guide — v3.018</title>
+<title>LA County Plant, Moss & Lichen Field Guide — v3.019</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -195,11 +195,11 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <meta name="robots" content="index, follow">
 <meta name="author" content="Rhys Marsh">
 <meta name="keywords" content="LA County plants, Los Angeles wildflowers, California native plants, plant field guide, Southern California flora, LA hiking plants, native plant identification, bloom times, iNaturalist, mosses, lichens, ferns, cacti, trees, shrubs, grasses, PWA field guide">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.018","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.019","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
 </head>
 <body>
 <div class="ld-ovr" id="ldOvr"><div class="ld-spin"></div><div class="ld-txt">Loading species data…</div></div>
-<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.018</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
+<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.019</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
 <div class="notch-bg"></div>
 <nav class="tbar" id="tBar"></nav>
 <main class="cnt">
@@ -361,33 +361,35 @@ function rSub(){const t=TAXA_ORDER.reduce((a,k)=>a+(SPECIES_DATA[k]||[]).length,
 
 function rTB(){const bar=document.getElementById('tBar'),sc=sC(),lc=lC();
 const hasAnyFilter=!!(state.statusFilter||state.observedFilter||state.endemicFilter||state.estFilter||state.elevFilter||state.searchQuery.trim());
-const fsc={};
+const fsc={};const flc={};
 for(const k of TAXA_ORDER){let fl=SPECIES_DATA[k]||[];
 if(state.statusFilter)fl=fl.filter(s=>s.st===state.statusFilter);
-if(state.observedFilter==='observed')fl=fl.filter(s=>isO(s,k));
-if(state.observedFilter==='unobserved')fl=fl.filter(s=>!isO(s,k));
 if(state.endemicFilter==='endemic')fl=fl.filter(s=>!!s.end);
 if(state.estFilter)fl=fl.filter(s=>s.est===state.estFilter);
 if(state.elevFilter)fl=fl.filter(s=>s.elev&&s.elev.includes(state.elevFilter));
 if(state.searchQuery.trim()){const q=state.searchQuery.toLowerCase();fl=fl.filter(s=>s.cn.toLowerCase().includes(q)||s.sn.toLowerCase().includes(q));}
-fsc[k]=fl.filter(s=>!s.ssp).length;}
+if(state.observedFilter==='observed')fl=fl.filter(s=>isO(s,k));
+if(state.observedFilter==='unobserved')fl=fl.filter(s=>!isO(s,k));
+fsc[k]=fl.filter(s=>!s.ssp).length;
+flc[k]=fl.filter(s=>!s.ssp&&isO(s,k)).length;}
 const hasLL=state.inatUsername&&!state.lifeListLoading&&Object.keys(state.lifeListData).length>0;
-bar.innerHTML=TAXA_ORDER.map(k=>{const t=TAXA[k],a=state.activeTaxon===k;const den=hasAnyFilter?(fsc[k]||0):(sc[k]||0);const ctStr=hasLL?`<span class="ct ${(lc[k]||0)>0?'ho':''}">${lc[k]||0}/${den}</span>`:`<span class="ct">${den}</span>`;return`<button class="ttab ${a?'active':''}" data-t="${k}"><span class="em">${t.emoji}</span><span class="lb">${t.label}</span>${ctStr}</button>`;}).join('');
+bar.innerHTML=TAXA_ORDER.map(k=>{const t=TAXA[k],a=state.activeTaxon===k;const den=hasAnyFilter?(fsc[k]||0):(sc[k]||0);const num=hasAnyFilter?(flc[k]||0):(lc[k]||0);const ctStr=hasLL?`<span class="ct ${num>0?'ho':''}">${num}/${den}</span>`:`<span class="ct">${den}</span>`;return`<button class="ttab ${a?'active':''}" data-t="${k}"><span class="em">${t.emoji}</span><span class="lb">${t.label}</span>${ctStr}</button>`;}).join('');
 bar.querySelectorAll('.ttab').forEach(b=>b.addEventListener('click',()=>{saveT(b.dataset.t);render();}));}
 
 function rLL(){const el=document.getElementById('llBar'),sc=sC(),lc=lC();
 const k=state.activeTaxon,tc=TAXA[k],tsc=sc[k]||0,tlc=lc[k]||0;
-const hasFilter=!!(state.statusFilter||state.familyFilter||state.observedFilter||state.searchQuery.trim()||state.elevFilter);
+const hasFilter=!!(state.statusFilter||state.familyFilter||state.observedFilter||state.searchQuery.trim()||state.elevFilter||state.estFilter||state.endemicFilter);
 let fsc=tsc,flc=tlc;
 if(hasFilter&&state.inatUsername){
 let fl=SPECIES_DATA[k]||[];
 if(state.statusFilter)fl=fl.filter(s=>s.st===state.statusFilter);
 if(state.familyFilter)fl=fl.filter(s=>s.fam===state.familyFilter);
 if(state.searchQuery.trim()){const q=state.searchQuery.toLowerCase();fl=fl.filter(s=>s.cn.toLowerCase().includes(q)||s.sn.toLowerCase().includes(q)||s.fam.toLowerCase().includes(q));}
-if(state.observedFilter==='observed')fl=fl.filter(s=>isO(s,k));
-if(state.observedFilter==='unobserved')fl=fl.filter(s=>!isO(s,k));
 if(state.endemicFilter==='endemic')fl=fl.filter(s=>!!s.end);if(state.endemicFilter==='non-endemic')fl=fl.filter(s=>!s.end);
 if(state.estFilter)fl=fl.filter(s=>s.est===state.estFilter);
+if(state.elevFilter)fl=fl.filter(s=>s.elev&&s.elev.includes(state.elevFilter));
+if(state.observedFilter==='observed')fl=fl.filter(s=>isO(s,k));
+if(state.observedFilter==='unobserved')fl=fl.filter(s=>!isO(s,k));
 fsc=fl.filter(s=>!s.ssp).length;flc=fl.filter(s=>!s.ssp&&isO(s,k)).length;}
 let h=`<div class="llh"><span class="lll">iNaturalist Life List</span><div id="llC"></div></div>`;
 if(state.inatUsername){const p=fsc>0?(flc/fsc*100):0;if(state.lifeListLoading)h+=`<div class="llld">Loading...</div>`;
@@ -420,7 +422,15 @@ el.querySelectorAll('.sp[data-o]').forEach(b=>b.addEventListener('click',()=>{co
 el.querySelectorAll('[data-est]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.est;state.estFilter=state.estFilter===v?null:v;render();}));
 el.querySelectorAll('[data-elv]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.elv;state.elevFilter=state.elevFilter===v?null:v;render();}));}
 
-function rTI(){const el=document.getElementById('tInfo'),tc=TAXA[state.activeTaxon],sp=SPECIES_DATA[state.activeTaxon]||[],fams=[...new Set(sp.map(s=>s.fam))],ssp=sspC(state.activeTaxon),spCount=ssp>0?`${sp.length-ssp} species + ${ssp} ssp`:`${sp.length} species`;
+function rTI(){const el=document.getElementById('tInfo'),tc=TAXA[state.activeTaxon];let sp=SPECIES_DATA[state.activeTaxon]||[];
+const hasAF=!!(state.statusFilter||state.estFilter||state.elevFilter||state.endemicFilter||state.searchQuery.trim());
+if(hasAF){
+if(state.statusFilter)sp=sp.filter(s=>s.st===state.statusFilter);
+if(state.estFilter)sp=sp.filter(s=>s.est===state.estFilter);
+if(state.elevFilter)sp=sp.filter(s=>s.elev&&s.elev.includes(state.elevFilter));
+if(state.endemicFilter==='endemic')sp=sp.filter(s=>!!s.end);
+if(state.searchQuery.trim()){const q=state.searchQuery.toLowerCase();sp=sp.filter(s=>s.cn.toLowerCase().includes(q)||s.sn.toLowerCase().includes(q));}}
+const fams=[...new Set(sp.map(s=>s.fam))],ssp=sp.filter(s=>s.ssp).length,spCount=ssp>0?`${sp.length-ssp} species + ${ssp} ssp`:`${sp.length} species`;
 const expanded=state.famExpanded||!!state.familyFilter;const arrow=expanded?'▾':'▸';
 el.innerHTML=`<div class="tit" id="famToggle" style="cursor:pointer;user-select:none">${tc.emoji} ${tc.label}<span style="font-weight:400;font-size:12px;color:#888;margin-left:8px">iNat ${tc.iNatTaxonId} · LA County</span></div><div class="tim" id="famToggle2" style="cursor:pointer;user-select:none">${spCount} · <span style="color:var(--gold)">${arrow} ${fams.length} group${fams.length===1?'':'s'}</span> <button id="famSortBtn" style="background:none;border:1px solid var(--gold);color:var(--gold);font-size:8px;padding:1px 5px;border-radius:8px;cursor:pointer;margin-left:4px;vertical-align:middle">${state.famSort==='alpha'?'A\u2192Z':'APG IV'}</button>${state.familyFilter?` · <strong>${state.familyFilter}</strong> <button onclick="event.stopPropagation();state.familyFilter=null;render()" style="background:none;border:none;color:#C62828;font-size:11px;font-weight:700">✕</button>`:''}</div><div class="fsw" style="display:${expanded?'flex':'none'}">${Object.entries(tc.familyColors).map(([f,c])=>{const cnt=sp.filter(s=>s.fam===f).length;return{f,c,cnt};}).sort((a,b)=>state.famSort==="apg"?((APG_IDX[a.f]??999)-(APG_IDX[b.f]??999)):a.f.localeCompare(b.f)).filter(({cnt})=>cnt>0).map(({f,c,cnt})=>{const a=state.familyFilter===f;return`<span class="fs ${a?'af':''}" data-fam="${f}"><span class="fsd" style="background:${c}"></span>${f} <span style="opacity:0.5;font-size:9px">(${cnt})</span></span>`;}).join('')}</div>`;
 const toggle=()=>{state.famExpanded=!state.famExpanded;rTI();};
