@@ -12,9 +12,12 @@ A free, open-source progressive web app (PWA) field guide to **1,476 plants, mos
 - **Photo caching** — photos fetched from iNat API and cached in IndexedDB for fast loading
 - **Offline-capable** — service worker caches all files for offline use
 - **100% ecological association notes** — every species has a unique species-specific ecological note with named wildlife species, fire ecology, indigenous ethnobotany, and sourced extraordinary claims
-- **Cross-linked ecosystem** — 237 deep links connecting plants to companion guides for bugs, birds, mammals, and fungi
+- **144 look-alike differentiation notes** — Jepson eFlora diagnostic keys for confusable species pairs, including all safety-critical toxic species
+- **Cross-linked ecosystem** — 199 deep links connecting plants to companion guides for bugs, birds, and mammals, with target taxa group routing
+- **Elevation filter** — toggle Coast / Lowland / Foothill / Mid-elevation / Mountain
 - **Establishment filter** — toggle Native / Introduced / Invasive species
 - **Endemic filter** — show only California endemic species
+- **Rarity filter** — All / Common / Uncommon / Rare / Endangered
 - **Family chips** — filter by plant family with taxonomic or alphabetical sorting
 - **Responsive** — designed for mobile field use
 - **No tracking, no ads, no login required**
@@ -25,42 +28,51 @@ Every species card includes ecological associations verified against published s
 
 | Ecological dimension | Species | Coverage | Sources |
 |---|---|---|---|
-| Pollinator associations | 1,036 | 70% | Xerces Society, Las Pilitas, UC Riverside |
-| Named bird species | 758 | 51% | LA Audubon, eBird, CWHR |
-| Butterfly/moth species | 211 | 14% | Las Pilitas, Art Shapiro (UC Davis) |
-| Fire ecology | 211 | 14% | Keeley & Fotheringham, CA Chaparral Institute |
-| Mammal/herp associations | 262 | 18% | CWHR, USDA browse database |
-| Indigenous ethnobotany | 139 | 9% | Timbrook (2007), Bean & Saubel (1972), McCawley (1996) |
+| Specific pollinator families | 731 | 50% | Xerces Society, Las Pilitas, UC Riverside |
+| Named bird species | 873 | 59% | LA Audubon, eBird, CWHR |
+| Butterfly/moth species | 217 | 15% | Las Pilitas, Art Shapiro (UC Davis) |
+| Fire ecology | 210 | 14% | Keeley & Fotheringham, CA Chaparral Institute |
+| Mammal/herp associations | 261 | 18% | CWHR, USDA browse database |
+| Indigenous ethnobotany | 136 | 9% | Timbrook (2007), Bean & Saubel (1972), McCawley (1996) |
+| Look-alike (vs) notes | 144 | 10% | Jepson eFlora diagnostic keys |
 | Mycorrhizal associations | 57 | 4% | UC Berkeley mycology |
-| Conservation status | 46 | 3% | CNPS, USFWS, CDFW |
-| Sourced claims | 10 | 1% | Jepson eFlora, UC Davis, USFWS, Xerces |
+| Conservation status | 45 | 3% | CNPS, USFWS, CDFW |
 
 ### Wildlife Species Referenced
 
 - **29/29 butterfly species** documented in LA County — each named on its host/nectar plants
 - **11 moth species** including California Oak Moth, Polyphemus Moth, Elegant Sheep Moth
-- **85 bird species** linkable to All About Birds (Cornell Lab)
-- **~25 mammal/herp species** linkable to la-fauna.org
+- **86 bird species** linkable to All About Birds (Cornell Lab / Merlin)
+- **~42 mammal/herp species** linkable to la-fauna.org
 - **6 specialist bee genera** (Andrena, Diadasia, Colletes, Osmia, Habropoda, Peponapis)
-- **2 endangered bee species** (Bombus crotchii, B. occidentalis)
+- **4 endangered bee species** (Bombus crotchii, B. occidentalis, Osmia ribifloris, Habropoda depressa)
 
 ### Cross-Link Ecosystem
 
-Ecological associations contain clickable links to companion field guides:
+Ecological associations contain clickable links to companion field guides. GROUP_LINKS include target taxa group hashes so users land on the correct tab (e.g., `?search=mining+bee#nativeBees`).
 
-| Destination | Link map | Entries | Styling |
+| Destination | Link map | Entries | Description |
 |---|---|---|---|
-| [labugs.org](https://labugs.org) | BUG_LINKS + GROUP_LINKS | 51 + 49 = 100 | Green text, gold underline |
-| [allaboutbirds.org](https://allaboutbirds.org) | BIRD_LINKS | 85 | Brown #5D4037, underline #8D6E63 |
-| [la-fauna.org](https://la-fauna.org) | FAUNA_LINKS | 54 | Green #2E7D32, underline #66BB6A |
+| [labugs.org](https://labugs.org) | BUG_LINKS | 42 | Butterfly/moth species → species deep-link |
+| [labugs.org](https://labugs.org) | GROUP_LINKS | 29 | Pollinator groups → filtered search with target tab |
+| [allaboutbirds.org](https://allaboutbirds.org) | BIRD_LINKS | 86 | Bird species → Cornell Lab / Merlin |
+| [la-fauna.org](https://la-fauna.org) | FAUNA_LINKS | 42 | Mammal/herp species → vertebrate guide |
+
+### Identification Support
+
+- **144 look-alike (vs) notes** using Jepson eFlora diagnostic characters
+- All 12+ oak species distinguishable via leaf shape, bark, acorn, and habitat
+- All 15 pine species distinguishable via needle count, cone size, bark scent
+- All safety-critical toxic species (Poison Hemlock, Sacred Datura, Oleander, Castor Bean, Star Lily) have vs notes
+- Sage trio, buckwheat pair, manzanita pair, sumac trio, Ceanothus complex, monkeyflower trio, penstemon trio, paintbrush trio all keyed
 
 ## Architecture
 
 v3 two-file PWA architecture:
 
 ```
-index.html          — 92 KB (CSS + JS + config, no framework)
-species-data.json   — 1,060 KB (species data, loaded async)
+index.html          — 91 KB (CSS + JS + config, no framework)
+species-data.json   — 1,062 KB (species data, loaded async)
 sw.js               — 1 KB (service worker, network-first + cache-fallback)
 manifest.json       — PWA manifest
 icons/              — App icons (128, 192, 512, 1024px + apple-touch)
@@ -88,24 +100,24 @@ This guide architecture is designed to be adapted to any geographic region. The 
      "fam": "Fagaceae",
      "est": "native",
      "st": "common",
+     "elev": "low,foot",
      "desc": "Evergreen tree to 80 ft with dense rounded crown...",
      "bloom": "Mar-May",
      "hp": "Supports 300+ insect species (UC Berkeley)...",
      "fm": {
        "Leaves": "Evergreen, convex, spiny margin...",
        "Bark": "Gray, furrowed...",
-       "Acorns": "Slender, pointed...",
-       "Habitat": "Canyons, north-facing slopes...",
-       "Size": "30-80 ft..."
+       "vs": "Distinguished from scrub oak by tree form..."
      }
    }
    ```
 
 2. **`index.html`** — Update the following sections:
    - Site title and domain references
-   - Cross-link maps (`BUG_LINKS`, `BIRD_LINKS`, `FAUNA_LINKS`, `FUNGI_LINKS`) — update to your region's companion guides or remove
+   - Cross-link maps (`BUG_LINKS`, `BIRD_LINKS`, `FAUNA_LINKS`, `GROUP_LINKS`) — update to your region's companion guides or remove
    - iNaturalist `place_id` in the API call (LA County = 962; find yours at inaturalist.org/places)
    - Footer links to companion guides
+   - Elevation band labels if your region's bands differ
 
 3. **`manifest.json`** — Update app name and short_name
 
@@ -119,6 +131,7 @@ The recommended workflow for building a regional species list:
 2. **Cross-reference with regional floras**: Verify against published floras, Jepson eFlora (California), or equivalent regional references
 3. **Add ecological associations**: Use local Audubon data, Xerces Society pollinator lists, state wildlife habitat databases (CWHR in California), and published ethnobotany sources for your region's indigenous peoples
 4. **Verify fire ecology**: If applicable, use regional fire ecology databases (Keeley & Fotheringham for California chaparral)
+5. **Add look-alike notes**: Use regional flora keys for confusable species pairs, prioritizing safety-critical toxic species
 
 ### Continuation prompt
 
@@ -129,7 +142,7 @@ A comprehensive continuation prompt is included in this repository at `continuat
 Species data verified against iNaturalist research-grade observations (LA County, place_id=962, >=2 RG observations). Full gap audit run 2026-03-25.
 
 ### Botanical References
-- Jepson eFlora (ucjeps.berkeley.edu/eflora)
+- Jepson eFlora (ucjeps.berkeley.edu/eflora) — primary source for diagnostic keys and vs notes
 - Calflora, CNPS Calscape, Cal-IPC Inventory
 - Muns & Chester, *Flora of the Santa Monica Mountains* (1999/2002)
 - Cooper, *Flora of Griffith Park* (2015)
@@ -155,8 +168,8 @@ Species data verified against iNaturalist research-grade observations (LA County
 ## Related Guides
 
 Part of the LA County Field Guide Suite:
-- **[labugs.org](https://labugs.org)** — Invertebrate Field Guide (1,016 species)
-- **[lafungi.org](https://lafungi.org)** — Fungi Field Guide (567 species)
+- **[labugs.org](https://labugs.org)** — Invertebrate Field Guide (3,439 species)
+- **[lafungi.org](https://lafungi.org)** — Fungi Field Guide (724 species)
 - **[la-fauna.org](https://la-fauna.org)** — Vertebrate Field Guide (planned)
 
 ## License

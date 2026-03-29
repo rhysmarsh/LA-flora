@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<title>LA County Plant, Moss & Lichen Field Guide — v3.016</title>
+<title>LA County Plant, Moss & Lichen Field Guide — v3.017</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -191,11 +191,11 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <meta name="robots" content="index, follow">
 <meta name="author" content="Rhys Marsh">
 <meta name="keywords" content="LA County plants, Los Angeles wildflowers, California native plants, plant field guide, Southern California flora, LA hiking plants, native plant identification, bloom times, iNaturalist, mosses, lichens, ferns, cacti, trees, shrubs, grasses, PWA field guide">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.016","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.017","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
 </head>
 <body>
 <div class="ld-ovr" id="ldOvr"><div class="ld-spin"></div><div class="ld-txt">Loading species data…</div></div>
-<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.016</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
+<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.017</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
 <div class="notch-bg"></div>
 <nav class="tbar" id="tBar"></nav>
 <main class="cnt">
@@ -242,7 +242,7 @@ else{if(el){el.innerHTML='<div style="text-align:center;padding:40px;color:var(-
 
 
 
-const state={famExpanded:false,famSort:"alpha",activeTaxon:'wildflowers',statusFilter:null,familyFilter:null,observedFilter:null,searchQuery:'',endemicFilter:null,estFilter:null,inatUsername:null,lifeListData:{},lifeListLoading:false,expandedCards:{},expandedSubsp:{},leafletMap:null,dsMap:null,photoCache:{},resolvedTids:{}};
+const state={famExpanded:false,famSort:"alpha",activeTaxon:'wildflowers',statusFilter:null,familyFilter:null,observedFilter:null,searchQuery:'',endemicFilter:null,estFilter:null,elevFilter:null,inatUsername:null,lifeListData:{},lifeListLoading:false,expandedCards:{},expandedSubsp:{},leafletMap:null,dsMap:null,photoCache:{},resolvedTids:{}};
 
 // === IndexedDB Persistent Photo Cache ===
 const IDB_NAME='plantGuidePhotos',IDB_VER=1,IDB_STORE='photos';
@@ -282,7 +282,7 @@ if(n>0)console.log('Hydrated '+n+' cached photos from IndexedDB');}
 
 function loadState(){try{const h=location.hash.replace('#','');if(TAXA_ORDER.includes(h))state.activeTaxon=h;const u=localStorage.getItem('inat_username');if(u)state.inatUsername=u;}catch{}}
 function saveU(n){state.inatUsername=n;try{n?localStorage.setItem('inat_username',n):localStorage.removeItem('inat_username')}catch{}}
-function saveT(k){state.activeTaxon=k;state.statusFilter=null;state.familyFilter=null;state.observedFilter=null;state.famExpanded=false;state.endemicFilter=null;state.estFilter=null;state.searchQuery='';state.expandedCards={};state.expandedSubsp={};for(const sp of(SPECIES_DATA[k]||[])){const c=state.photoCache[sp.sn];if(c&&!c.url&&c._rc){delete state.photoCache[sp.sn];}}try{location.hash=k}catch{}}
+function saveT(k){state.activeTaxon=k;state.statusFilter=null;state.familyFilter=null;state.observedFilter=null;state.famExpanded=false;state.endemicFilter=null;state.estFilter=null;state.elevFilter=null;state.searchQuery='';state.expandedCards={};state.expandedSubsp={};for(const sp of(SPECIES_DATA[k]||[])){const c=state.photoCache[sp.sn];if(c&&!c.url&&c._rc){delete state.photoCache[sp.sn];}}try{location.hash=k}catch{}}
 
 document.getElementById('sclT').addEventListener('click',()=>{document.getElementById('sclB').classList.toggle('show');});
 
@@ -367,7 +367,7 @@ bar.querySelectorAll('.ttab').forEach(b=>b.addEventListener('click',()=>{saveT(b
 
 function rLL(){const el=document.getElementById('llBar'),sc=sC(),lc=lC();
 const k=state.activeTaxon,tc=TAXA[k],tsc=sc[k]||0,tlc=lc[k]||0;
-const hasFilter=!!(state.statusFilter||state.familyFilter||state.observedFilter||state.searchQuery.trim());
+const hasFilter=!!(state.statusFilter||state.familyFilter||state.observedFilter||state.searchQuery.trim()||state.elevFilter);
 let fsc=tsc,flc=tlc;
 if(hasFilter&&state.inatUsername){
 let fl=SPECIES_DATA[k]||[];
@@ -400,11 +400,15 @@ h+=`<div style="width:100%;height:0"></div>`;
 h+=`<button class="sp" data-est="native" style="${state.estFilter==='native'?'background:#2E7D32;color:#fff;border-color:#2E7D32':'border-color:#2E7D3240;color:#2E7D32'}">Native</button>`;
 h+=`<button class="sp" data-est="introduced" style="${state.estFilter==='introduced'?'background:#E65100;color:#fff;border-color:#E65100':'border-color:#E6510040;color:#E65100'}">Intro</button>`;
 h+=`<button class="sp" data-est="invasive" style="${state.estFilter==='invasive'?'background:#C62828;color:#fff;border-color:#C62828':'border-color:#C6282840;color:#C62828'}">Invasive</button>`;
+h+=`<div style="width:100%;height:0"></div>`;
+const elevBands=[['coast','Coast'],['low','Lowland'],['foot','Foothill'],['mid','Mid-elev'],['high','Mountain']];
+for(const[k,l]of elevBands){const a=state.elevFilter===k;h+=`<button class="sp" data-elv="${k}" style="${a?'background:#5D4037;color:#fff;border-color:#5D4037':'border-color:#5D403740;color:#5D4037'}">${l}</button>`;}
 h+=`<button class="sp ${state.endemicFilter==='endemic'?'aa':''}" data-ef="endemic" style="${state.endemicFilter==='endemic'?'background:#1A237E;color:#fff;border-color:#1A237E':'border-color:#1A237E40;color:#1A237E'}">Endemic</button>`;
 el.innerHTML=h;el.querySelectorAll('.sp[data-s]').forEach(b=>b.addEventListener('click',()=>{const s=b.dataset.s;state.statusFilter=s===''?null:(state.statusFilter===s?null:s);render();}));
 el.querySelectorAll('[data-ef]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.ef;state.endemicFilter=state.endemicFilter===v?null:v;render();}));
 el.querySelectorAll('.sp[data-o]').forEach(b=>b.addEventListener('click',()=>{const o=b.dataset.o;state.observedFilter=state.observedFilter===o?null:o;render();}));
-el.querySelectorAll('[data-est]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.est;state.estFilter=state.estFilter===v?null:v;render();}));}
+el.querySelectorAll('[data-est]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.est;state.estFilter=state.estFilter===v?null:v;render();}));
+el.querySelectorAll('[data-elv]').forEach(b=>b.addEventListener('click',()=>{const v=b.dataset.elv;state.elevFilter=state.elevFilter===v?null:v;render();}));}
 
 function rTI(){const el=document.getElementById('tInfo'),tc=TAXA[state.activeTaxon],sp=SPECIES_DATA[state.activeTaxon]||[],fams=[...new Set(sp.map(s=>s.fam))],ssp=sspC(state.activeTaxon),spCount=ssp>0?`${sp.length-ssp} species + ${ssp} ssp`:`${sp.length} species`;
 const expanded=state.famExpanded||!!state.familyFilter;const arrow=expanded?'▾':'▸';
@@ -431,6 +435,7 @@ if(state.observedFilter==='unobserved')list=list.filter(s=>s.ssp?!isO(s):!isOPar
 if(state.endemicFilter==='endemic')list=list.filter(s=>!!s.end);
 if(state.endemicFilter==='non-endemic')list=list.filter(s=>!s.end);
 if(state.estFilter)list=list.filter(s=>s.est===state.estFilter);
+if(state.elevFilter)list=list.filter(s=>s.elev&&s.elev.includes(state.elevFilter));
 let xtrHtml='';
 if(state.searchQuery.trim()){const q=state.searchQuery.toLowerCase();
 list=list.filter(s=>s.cn.toLowerCase().includes(q)||s.sn.toLowerCase().includes(q)||s.fam.toLowerCase().includes(q));
