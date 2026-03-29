@@ -11,7 +11,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <link rel="icon" type="image/x-icon" href="icons/favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
-<title>LA County Plant, Moss & Lichen Field Guide — v3.017</title>
+<title>LA County Plant, Moss & Lichen Field Guide — v3.018</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -26,6 +26,10 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 .hdr::after{content:'';position:absolute;top:-30%;right:-10%;width:200px;height:200px;background:radial-gradient(circle,rgba(191,164,110,0.08),transparent 70%);border-radius:50%;pointer-events:none}
 .hdr h1{font-family:var(--fd);font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-0.01em;margin:0;position:relative}
 .hdr .sub{font-size:12px;margin-top:4px;margin-bottom:0;opacity:0.55;font-weight:500;position:relative}
+.xnav{display:flex;background:var(--forest-deep);border-top:1px solid rgba(191,164,110,0.2)}
+.xnav-a{flex:1;text-align:center;padding:10px 4px;color:var(--gold);font-family:var(--fb);font-size:12px;font-weight:600;text-decoration:none;opacity:0.6;transition:opacity 0.2s}
+.xnav-a.active{opacity:1;background:rgba(191,164,110,0.12);border-bottom:2px solid var(--gold)}
+.xnav-a:hover{opacity:1}
 .tbar{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-bottom:2px solid #e8e0d4;background:#FDFBF7;position:sticky;position:-webkit-sticky;top:var(--safe-top);z-index:50}
 .notch-bg{position:fixed;top:0;left:0;right:0;height:var(--safe-top);background:var(--cream);z-index:49;pointer-events:none}
 .tbar::-webkit-scrollbar{display:none}
@@ -191,11 +195,11 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <meta name="robots" content="index, follow">
 <meta name="author" content="Rhys Marsh">
 <meta name="keywords" content="LA County plants, Los Angeles wildflowers, California native plants, plant field guide, Southern California flora, LA hiking plants, native plant identification, bloom times, iNaturalist, mosses, lichens, ferns, cacti, trees, shrubs, grasses, PWA field guide">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.017","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"LA County Plant, Moss & Lichen Field Guide","url":"https://la-flora.org","description":"A free, open-source field guide to 1473 plants, mosses, and lichens of Los Angeles County. Wildflowers, trees, ferns, cacti, and more — with photos, field marks, bloom times, and observation maps.","applicationCategory":"ReferenceApplication","operatingSystem":"Any","author":{"@type":"Person","name":"Rhys Marsh"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"3.018","browserRequirements":"Requires JavaScript","featureList":"1473 species, iNaturalist life list tracking, satellite observation maps, photo caching, offline-capable PWA, async data loading"}</script>
 </head>
 <body>
 <div class="ld-ovr" id="ldOvr"><div class="ld-spin"></div><div class="ld-txt">Loading species data…</div></div>
-<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.017</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
+<header class="hdr"><h1>LA County Plant<br>Field Guide <span style="font-size:14px;font-weight:400;opacity:0.6">v3.018</span></h1><p class="sub" id="hSub">1473 species across 10 taxa groups<br><span style="font-size:9px;opacity:0.5;font-weight:400">For informational purposes only — not a substitute for expert identification</span></p></header>
 <div class="notch-bg"></div>
 <nav class="tbar" id="tBar"></nav>
 <main class="cnt">
@@ -210,7 +214,8 @@ button{font-family:inherit;cursor:pointer}input{font-family:inherit}
 <div class="ti" id="tInfo"></div>
 <div id="spCont"></div>
 </main>
-<footer class="ft">Field guide by Rhys Marsh<div class="ftc">For informational purposes only — not a substitute for expert identification. By using this app you agree to the <a href="https://github.com/rhysmarsh/LA-flora/blob/main/LICENSE" target="_blank" rel="noopener" style="color:var(--gold)">terms &amp; license</a>.</div><div class="ftc">Data: iNaturalist · Photos: CC-licensed · Maps: ESRI + iNat · Ref: Calflora, CalPhotos, Jepson eFlora, California Native Plant Society, Theodore Payne Foundation</div><div style="display:flex;justify-content:center;gap:14px;margin-top:12px;flex-wrap:wrap"><a href="https://labugs.org" target="_blank" rel="noopener" style="color:var(--gold);font-family:var(--fb);font-weight:600;text-decoration:none;font-size:0.85rem">🐛 LA Invertebrates →</a><a href="https://lafungi.org" target="_blank" rel="noopener" style="color:var(--gold);font-family:var(--fb);font-weight:600;text-decoration:none;font-size:0.85rem">🍄 LA Fungi →</a><a href="https://la-fauna.org" target="_blank" rel="noopener" style="color:var(--gold);font-family:var(--fb);font-weight:600;text-decoration:none;font-size:0.85rem">🦎 LA Fauna →</a></div><a href="https://github.com/rhysmarsh/LA-flora" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;color:var(--gold);font-family:var(--fb);font-weight:600;text-decoration:none;font-size:0.95rem">Fork this on GitHub →</a></footer>
+<nav class="xnav"><a href="https://la-flora.org" class="xnav-a active">🌿 Flora</a><a href="https://lafungi.org" target="_blank" rel="noopener" class="xnav-a">🍄 Fungi</a><a href="https://labugs.org" target="_blank" rel="noopener" class="xnav-a">🐛 Bugs</a><a href="https://la-fauna.org" target="_blank" rel="noopener" class="xnav-a">🦎 Fauna</a></nav>
+<footer class="ft">Field guide by Rhys Marsh<div class="ftc">For informational purposes only — not a substitute for expert identification. By using this app you agree to the <a href="https://github.com/rhysmarsh/LA-flora/blob/main/LICENSE" target="_blank" rel="noopener" style="color:var(--gold)">terms &amp; license</a>.</div><div class="ftc">Data: iNaturalist · Photos: CC-licensed · Maps: ESRI + iNat · Ref: Calflora, CalPhotos, Jepson eFlora, California Native Plant Society, Theodore Payne Foundation</div><a href="https://github.com/rhysmarsh/LA-flora" target="_blank" rel="noopener" style="display:inline-block;margin-top:10px;color:var(--gold);font-family:var(--fb);font-weight:600;text-decoration:none;font-size:0.95rem">Fork this on GitHub →</a></footer>
 <div class="mo hid" id="mOvr"><div class="mm"><div class="mmh"><div><div class="mmt" id="mTit"></div><div class="mms" id="mSub"></div></div><button class="mmc" id="mCl">&times;</button></div><div class="mc" id="mCon"></div><div class="mml"><a id="mLnk" href="#" target="_blank" rel="noopener noreferrer">Open in iNaturalist</a></div></div></div>
 <script>
 
@@ -355,14 +360,19 @@ function fmtN(n){return n.toLocaleString();}
 function rSub(){const t=TAXA_ORDER.reduce((a,k)=>a+(SPECIES_DATA[k]||[]).length,0);const ssp=TAXA_ORDER.reduce((a,k)=>a+sspC(k),0);document.getElementById('hSub').textContent=ssp>0?`${fmtN(t-ssp)} species + ${ssp} varieties across ${TAXA_ORDER.length} taxa groups`:`${fmtN(t)} species across ${TAXA_ORDER.length} taxa groups`;}
 
 function rTB(){const bar=document.getElementById('tBar'),sc=sC(),lc=lC();
-const hasOF=!!state.observedFilter;
-const fsc=hasOF?{}:sc;
-if(hasOF){for(const k of TAXA_ORDER){let fl=SPECIES_DATA[k]||[];
+const hasAnyFilter=!!(state.statusFilter||state.observedFilter||state.endemicFilter||state.estFilter||state.elevFilter||state.searchQuery.trim());
+const fsc={};
+for(const k of TAXA_ORDER){let fl=SPECIES_DATA[k]||[];
+if(state.statusFilter)fl=fl.filter(s=>s.st===state.statusFilter);
 if(state.observedFilter==='observed')fl=fl.filter(s=>isO(s,k));
-else if(state.observedFilter==='unobserved')fl=fl.filter(s=>!isO(s,k));
-fsc[k]=fl.filter(s=>!s.ssp).length;}}
+if(state.observedFilter==='unobserved')fl=fl.filter(s=>!isO(s,k));
+if(state.endemicFilter==='endemic')fl=fl.filter(s=>!!s.end);
+if(state.estFilter)fl=fl.filter(s=>s.est===state.estFilter);
+if(state.elevFilter)fl=fl.filter(s=>s.elev&&s.elev.includes(state.elevFilter));
+if(state.searchQuery.trim()){const q=state.searchQuery.toLowerCase();fl=fl.filter(s=>s.cn.toLowerCase().includes(q)||s.sn.toLowerCase().includes(q));}
+fsc[k]=fl.filter(s=>!s.ssp).length;}
 const hasLL=state.inatUsername&&!state.lifeListLoading&&Object.keys(state.lifeListData).length>0;
-bar.innerHTML=TAXA_ORDER.map(k=>{const t=TAXA[k],a=state.activeTaxon===k;const den=hasOF?(fsc[k]||0):(sc[k]||0);const ctStr=hasLL?`<span class="ct ${(lc[k]||0)>0?'ho':''}">${lc[k]||0}/${den}</span>`:`<span class="ct">${den}</span>`;return`<button class="ttab ${a?'active':''}" data-t="${k}"><span class="em">${t.emoji}</span><span class="lb">${t.label}</span>${ctStr}</button>`;}).join('');
+bar.innerHTML=TAXA_ORDER.map(k=>{const t=TAXA[k],a=state.activeTaxon===k;const den=hasAnyFilter?(fsc[k]||0):(sc[k]||0);const ctStr=hasLL?`<span class="ct ${(lc[k]||0)>0?'ho':''}">${lc[k]||0}/${den}</span>`:`<span class="ct">${den}</span>`;return`<button class="ttab ${a?'active':''}" data-t="${k}"><span class="em">${t.emoji}</span><span class="lb">${t.label}</span>${ctStr}</button>`;}).join('');
 bar.querySelectorAll('.ttab').forEach(b=>b.addEventListener('click',()=>{saveT(b.dataset.t);render();}));}
 
 function rLL(){const el=document.getElementById('llBar'),sc=sC(),lc=lC();

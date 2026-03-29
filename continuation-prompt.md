@@ -844,6 +844,20 @@ Added elevation band filter with toggle chips: Coast / Lowland / Foothill / Mid-
 5. Render chips with `data-elv` attribute, brown color scheme (`#5D4037`)
 6. Add click listener toggling `state.elevFilter`
 
+**CRITICAL: Update rTB() to reflect all filters in taxa bar counts.**
+The original `rTB()` only applied the observed filter to tab counts — all other filters (status, est, elevation, endemic, search) were ignored, showing stale totals. Fix: compute `fsc[k]` for every group by applying the same filter chain used in `rSp()`:
+```javascript
+for(const k of TAXA_ORDER){let fl=SPECIES_DATA[k]||[];
+if(state.statusFilter)fl=fl.filter(s=>s.st===state.statusFilter);
+if(state.observedFilter==='observed')fl=fl.filter(s=>isO(s,k));
+if(state.estFilter)fl=fl.filter(s=>s.est===state.estFilter);
+if(state.elevFilter)fl=fl.filter(s=>s.elev&&s.elev.includes(state.elevFilter));
+if(state.searchQuery.trim()){const q=state.searchQuery.toLowerCase();
+  fl=fl.filter(s=>s.cn.toLowerCase().includes(q)||s.sn.toLowerCase().includes(q));}
+fsc[k]=fl.filter(s=>!s.ssp).length;}
+```
+Note: `familyFilter` is deliberately excluded from rTB counts — it only applies to the active group.
+
 **Backport to other guides**: Any guide with `elev` field can add this. Chip labels can be customized per guide. Fungi guide could use Substrate-type filter instead.
 
 ### Build Lesson #19: Badge Layout on Photo Cards
