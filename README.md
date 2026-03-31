@@ -1,18 +1,18 @@
 # LA County Plant, Moss & Lichen Field Guide
 
-A free, open-source progressive web app (PWA) field guide to **1,476 plants, mosses, and lichens** of Los Angeles County. Wildflowers, trees, shrubs, ferns, grasses, cacti, aquatic plants, vines, mosses, and lichens — with photos, field marks, bloom times, ecological notes, and iNaturalist observation maps.
+A free, open-source progressive web app (PWA) field guide to **1,485 plants, mosses, and lichens** of Los Angeles County. Wildflowers, trees, shrubs, ferns, grasses, cacti, aquatic plants, vines, mosses, and lichens — with photos, field marks, bloom times, ecological notes, and iNaturalist observation maps.
 
 **Live at [la-flora.org](https://la-flora.org)**
 
 ## Features
 
-- **1,476 species** across 10 taxa groups — 1,058 native, 379 introduced, 43 invasive
+- **1,485 species** across 10 taxa groups — 1,052 native, 367 introduced, 66 invasive
 - **iNaturalist life list tracking** — enter your iNat username to see which species you've observed
 - **Satellite observation maps** — iNat occurrence maps for every species
 - **Photo caching** — photos fetched from iNat API and cached in IndexedDB for fast loading
 - **Offline-capable** — service worker caches all files for offline use
 - **100% ecological association notes** — every species has a unique species-specific ecological note with named wildlife species, fire ecology, indigenous ethnobotany, and sourced extraordinary claims
-- **144 look-alike differentiation notes** — Jepson eFlora diagnostic keys for confusable species pairs, including all safety-critical toxic species
+- **160 look-alike differentiation notes** — Jepson eFlora diagnostic keys for confusable species pairs, including all safety-critical toxic species
 - **Cross-linked ecosystem** — 199 deep links connecting plants to companion guides for bugs, birds, and mammals, with target taxa group routing
 - **Elevation filter** — toggle Coast / Lowland / Foothill / Mid-elevation / Mountain
 - **Establishment filter** — toggle Native / Introduced / Invasive species
@@ -28,13 +28,13 @@ Every species card includes ecological associations verified against published s
 
 | Ecological dimension | Species | Coverage | Sources |
 |---|---|---|---|
-| Specific pollinator families | 731 | 50% | Xerces Society, Las Pilitas, UC Riverside |
+| Specific pollinator families | 731 | 49% | Xerces Society, Las Pilitas, UC Riverside |
 | Named bird species | 873 | 59% | LA Audubon, eBird, CWHR |
 | Butterfly/moth species | 217 | 15% | Las Pilitas, Art Shapiro (UC Davis) |
 | Fire ecology | 210 | 14% | Keeley & Fotheringham, CA Chaparral Institute |
 | Mammal/herp associations | 261 | 18% | CWHR, USDA browse database |
 | Indigenous ethnobotany | 136 | 9% | Timbrook (2007), Bean & Saubel (1972), McCawley (1996) |
-| Look-alike (vs) notes | 144 | 10% | Jepson eFlora diagnostic keys |
+| Look-alike (vs) notes | 160 | 11% | Jepson eFlora diagnostic keys |
 | Mycorrhizal associations | 57 | 4% | UC Berkeley mycology |
 | Conservation status | 45 | 3% | CNPS, USFWS, CDFW |
 
@@ -60,7 +60,7 @@ Ecological associations contain clickable links to companion field guides. GROUP
 
 ### Identification Support
 
-- **144 look-alike (vs) notes** using Jepson eFlora diagnostic characters
+- **160 look-alike (vs) notes** using Jepson eFlora diagnostic characters
 - All 12+ oak species distinguishable via leaf shape, bark, acorn, and habitat
 - All 15 pine species distinguishable via needle count, cone size, bark scent
 - All safety-critical toxic species (Poison Hemlock, Sacred Datura, Oleander, Castor Bean, Star Lily) have vs notes
@@ -72,7 +72,7 @@ v3 two-file PWA architecture:
 
 ```
 index.html          — 91 KB (CSS + JS + config, no framework)
-species-data.json   — 1,062 KB (species data, loaded async)
+species-data.json   — 1,070 KB (species data, loaded async)
 sw.js               — 1 KB (service worker, network-first + cache-fallback)
 manifest.json       — PWA manifest
 icons/              — App icons (128, 192, 512, 1024px + apple-touch)

@@ -13,7 +13,7 @@ I'm building a suite of self-contained PWA field guides to the natural history o
 
 ## Architecture (shared across all guides)
 
-Single-file PWA for most guides. **Plant Guide v3+ uses two-file architecture** with externalized SPECIES_DATA for scale.
+Single-file PWA for most guides. **Plant Guide v3+ and Fungi Guide v3.001+ use two-file architecture** with externalized SPECIES_DATA for scale.
 
 - **Photos**: fetched from iNat `/taxa/autocomplete`, cached in IndexedDB (persistent across sessions)
 - **Life list**: iNat `species_counts` API with `place_id=962` (LA County)
@@ -171,7 +171,7 @@ For taxa that overlap between guides (e.g., lichens in both flora and fungi), ad
 
 ## Guide 1: LA County Invertebrate Field Guide (labugs.org)
 
-**Status**: v3.023 — deploy-ready, 3,439 species
+**Status**: v3.021 — deploy-ready, all checks passed, elevation filter, IndexedDB offline, full taxa/status audit
 **Species**: 3,439 (3,434 main + 5 ssp) across 15 taxa groups
 **Architecture**: Multi-file split (index.html 77 KB + 15 data/*.json files ≈ 1,884 KB total)
 **IDB name**: `invertGuidePhotos`
@@ -253,7 +253,7 @@ The `isopods` group (key retained for backward compat) is labeled "Crustaceans" 
 This is the **template source** for all new guides. Fork v3.015 and adapt.
 
 ### Key Metrics
-- **1,476 species** (1,473 main + 3 ssp) | 10 taxa groups | v3 two-file architecture
+- **1,485 species** (1,473 main + 3 ssp) | 10 taxa groups | v3 two-file architecture
 - **100% hp ecological association coverage** (1,476/1,476) — all species-specific, zero template notes
 - **Deep ecological data**: 731 species (50%) with named bee families, 882 (60%) with named bird species, 281 (19%) with named mammals/herps, 221 (15%) with fire ecology, 217 (15%) with butterfly/moth species, 147 (10%) with indigenous ethnobotany, 10 with sourced extraordinary claims
 - **29/29 butterfly species** and **11/11 moth species** documented on host/nectar plants
@@ -601,7 +601,7 @@ Hinton *Seashore Life of Southern California* (1987), Gotshall *Guide to Marine 
 - [ ] **Cross-group search preserves searchQuery** — "Also found in" buttons must NOT call saveT() (see Build Lesson #23)
 
 ### hp Ecological Associations — Proven 100% Coverage Methodology
-The plant guide achieved 100% species-specific hp coverage across 1,476 species using this multi-pass approach (reuse for all guides):
+The plant guide achieved 100% species-specific hp coverage across 1,485 species using this multi-pass approach (reuse for all guides):
 
 1. **Template generation** — generate initial notes from species attributes (trophic mode, habitat, family, establishment status). Gets to 100% coverage but generic quality.
 2. **Source-verified enhancement (top tier)** — research top ~200 species (highest iNat observation count) against authoritative sources: Xerces Society pollinator lists, Las Pilitas butterfly-plant database, Cal-IPC invasive rankings, Calscape wildlife associations, fire ecology literature (Keeley, California Chaparral Institute).
@@ -831,6 +831,27 @@ All of these create a visible cream-colored gap between the header and taxa bar 
 
 **Key insight for future guides:** Never add safe-area padding to a sticky element's own box model. Handle safe area entirely through the `top` property (for sticky positioning) and a separate fixed background element (for visual coverage).
 
+### Build Lesson #25: GROUP_LINKS Must Include Target Taxa Group Hash (v3.016)
+Cross-guide GROUP_LINKS must include target taxa hash (e.g., `?search=mining+bee#nativeBees`). Without it, the receiving guide opens its default tab, forces extra click. Mapping: bees→#nativeBees, bumble→#bumblebees, sphinx→#moths, hover+fly→#hoverflies, bee+fly→#flies, lady+beetle→#beetles.
+
+### Build Lesson #26: est Field Replaces INTRO_SET (Fungi v3.001)
+Per-species `est` field (`native`/`introduced`/`invasive`) replaces INTRO_SET pattern. Recommended for all new guides.
+
+### Build Lesson #27: iNat Gap Finder — Kingdom-Level Queries (Fungi v3.001)
+Fungi gap finder queries entire kingdom (taxon_id 47170) — NOT per-order. `iconic_taxon_name` silently drops valid results.
+
+### Build Lesson #28: hp Deduplication at Scale (Fungi v3.001)
+Three-pass approach: family-level → genus-level → species-level enrichment.
+
+### Build Lesson #29: Elevation Filter + Consistent Filtered Counts (Flora v3.019)
+Elevation filter with toggle chips. **CRITICAL: ALL count pipelines (rTB, rLL, rTI, rSp) must apply the same filter chain.** Observed filter goes LAST. For life list in rTB, compute both `fsc[k]` (filtered total) and `flc[k]` (filtered seen) from the same filtered list.
+
+### Build Lesson #30: IndexedDB Offline Persistence (Flora v3.020)
+iOS Safari evicts SW caches after ~7 days. Fix: three-tier fallback in `loadSpeciesData()`: (1) network fetch → save to IDB, (2) CacheStorage, (3) IndexedDB. IDB name is guide-specific (`floraOffline`, `fungiOffline`). Backport to all guides.
+
+### Build Lesson #31: Rarity Status Cross-Reference (Flora v3.021)
+Status reflects LA County field encounter frequency, not range-wide abundance. CNPS rank mapping: 1B→endangered/rare, 2→rare, 3→uncommon, 4→uncommon+note, Federal E/T→endangered. Non-native planted trees: `uncommon` not `rare`. Confusable species pairs (e.g., two junipers at different elevations) need vs notes.
+
 ### Build Lesson #19: Badge Layout on Photo Cards
 The `.badge-col` pattern prevents badge overlap on species photo cards. All top-left badges (establishment pill + rarity pip) are wrapped in a single flex column container:
 
@@ -904,7 +925,8 @@ When continuing this project:
 4. **Validate structure** via backtick count (not brace/paren/bracket count) and JSON.parse for data
 5. **Always run the pre-publish audit** (20 items) after species data changes
 6. **Increment version** on every build (+.001), sync title/header/SW/JSON-LD. **Also write updated sw.js** with matching cache name — see Build Lesson #16. For v3 guides, update sw.js ASSETS array if files change.
-7. **Match the user's working style**: proceed on assumptions, peer-level depth, institutional-quality output, clear positions, proactive risk flags
+7. **Every new species MUST have `id` and `dur` fields** — without `id`, click handler silently fails. Generate IDs as `{prefix}_{nnnn}` (wil/tre/shr/gra/fer/cac/vin/aqt/mos/lic).
+8. **Match the user's working style**: proceed on assumptions, peer-level depth, institutional-quality output, clear positions, proactive risk flags
 8. **Watch for the template literal injection gotcha** — see "Known Gotcha" above
 9. **Change activeTaxon** immediately when forking template for a new guide
 10. **Assign real family colors** immediately — never use #999 placeholder
