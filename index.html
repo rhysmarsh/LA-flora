@@ -344,9 +344,12 @@ ppq();}
 async function fetchLL(){if(!state.inatUsername)return;state.lifeListLoading=true;rLL();
 const res={};const idMap={};for(const k of TAXA_ORDER){const tid=TAXA[k].iNatTaxonId;if(!idMap[tid])idMap[tid]=[];idMap[tid].push(k);}
 for(const[tid,taxa]of Object.entries(idMap)){
-try{const r=await fetch(`https://api.inaturalist.org/v1/observations/species_counts?user_id=${encodeURIComponent(state.inatUsername)}&place_id=962&taxon_id=${tid}&captive=false&verifiable=true&per_page=500`);
-const d=await r.json();const ids=new Set(),names=new Set();
+try{const ids=new Set(),names=new Set();let page=1,totalFetched=0,totalResults=Infinity;
+while(totalFetched<totalResults){
+const r=await fetch(`https://api.inaturalist.org/v1/observations/species_counts?user_id=${encodeURIComponent(state.inatUsername)}&place_id=962&taxon_id=${tid}&captive=false&verifiable=true&per_page=500&page=${page}`);
+const d=await r.json();totalResults=d.total_results||0;
 for(const x of(d.results||[])){if(x.taxon?.id)ids.add(x.taxon.id);if(x.taxon?.name)names.add(x.taxon.name.toLowerCase());}
+totalFetched+=(d.results||[]).length;page++;if(!(d.results||[]).length)break;}
 for(const k of taxa)res[k]={ids,names};}catch{for(const k of taxa)res[k]={ids:new Set(),names:new Set()};}}
 state.lifeListData=res;state.lifeListLoading=false;render();}
 

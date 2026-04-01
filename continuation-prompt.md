@@ -849,6 +849,25 @@ Elevation filter with toggle chips. **CRITICAL: ALL count pipelines (rTB, rLL, r
 ### Build Lesson #30: IndexedDB Offline Persistence (Flora v3.020)
 iOS Safari evicts SW caches after ~7 days. Fix: three-tier fallback in `loadSpeciesData()`: (1) network fetch → save to IDB, (2) CacheStorage, (3) IndexedDB. IDB name is guide-specific (`floraOffline`, `fungiOffline`). Backport to all guides.
 
+### Build Lesson #32: fetchLL Must Paginate species_counts (Flora v3.021)
+iNat's `species_counts` endpoint returns max 500 results per page. An active LA County naturalist can easily exceed 500 plant species, causing silent truncation — species on page 2+ are never matched, so observations don't show as "seen."
+
+**Fix**: Paginate the fetch loop:
+```javascript
+let page=1, totalFetched=0, totalResults=Infinity;
+while(totalFetched < totalResults) {
+  const r = await fetch(url + `&per_page=500&page=${page}`);
+  const d = await r.json();
+  totalResults = d.total_results || 0;
+  // accumulate ids and names into Sets
+  totalFetched += d.results.length;
+  page++;
+  if(!d.results.length) break; // safety valve
+}
+```
+
+**Backport to all guides**: Any guide querying `species_counts` with `per_page=500` needs pagination. The bug is invisible for users with <500 species in the queried taxon group — it only manifests for power users.
+
 ### Build Lesson #31: Rarity Status Cross-Reference (Flora v3.021)
 Status reflects LA County field encounter frequency, not range-wide abundance. CNPS rank mapping: 1B→endangered/rare, 2→rare, 3→uncommon, 4→uncommon+note, Federal E/T→endangered. Non-native planted trees: `uncommon` not `rare`. Confusable species pairs (e.g., two junipers at different elevations) need vs notes.
 
