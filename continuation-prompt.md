@@ -171,7 +171,7 @@ For taxa that overlap between guides (e.g., lichens in both flora and fungi), ad
 
 ## Guide 1: LA County Invertebrate Field Guide (labugs.org)
 
-**Status**: v3.021 — deploy-ready, all checks passed, elevation filter, IndexedDB offline, full taxa/status audit
+**Status**: v3.022 — deploy-ready, all checks passed, elevation filter, IndexedDB offline, full taxa/status audit
 **Species**: 3,439 (3,434 main + 5 ssp) across 15 taxa groups
 **Architecture**: Multi-file split (index.html 77 KB + 15 data/*.json files ≈ 1,884 KB total)
 **IDB name**: `invertGuidePhotos`
@@ -849,26 +849,18 @@ Elevation filter with toggle chips. **CRITICAL: ALL count pipelines (rTB, rLL, r
 ### Build Lesson #30: IndexedDB Offline Persistence (Flora v3.020)
 iOS Safari evicts SW caches after ~7 days. Fix: three-tier fallback in `loadSpeciesData()`: (1) network fetch → save to IDB, (2) CacheStorage, (3) IndexedDB. IDB name is guide-specific (`floraOffline`, `fungiOffline`). Backport to all guides.
 
-### Build Lesson #32: fetchLL Must Paginate species_counts (Flora v3.021)
-iNat's `species_counts` endpoint returns max 500 results per page. An active LA County naturalist can easily exceed 500 plant species, causing silent truncation — species on page 2+ are never matched, so observations don't show as "seen."
+### Build Lesson #32: fetchLL — Pagination + quality_grade + NAME_ALIASES (Flora v3.022)
+Three issues caused missing "seen" marks in the iNat life list:
 
-**Fix**: Paginate the fetch loop:
-```javascript
-let page=1, totalFetched=0, totalResults=Infinity;
-while(totalFetched < totalResults) {
-  const r = await fetch(url + `&per_page=500&page=${page}`);
-  const d = await r.json();
-  totalResults = d.total_results || 0;
-  // accumulate ids and names into Sets
-  totalFetched += d.results.length;
-  page++;
-  if(!d.results.length) break; // safety valve
-}
-```
+**1. No pagination** (fixed v3.021): `species_counts` returns max 500 per page. Power users exceed this. Fix: while loop with `page` param.
 
-**Backport to all guides**: Any guide querying `species_counts` with `per_page=500` needs pagination. The bug is invisible for users with <500 species in the queried taxon group — it only manifests for power users.
+**2. Missing quality_grade** (fixed v3.022): Observations with only 1 ID have quality_grade="needs_id". Add `quality_grade=research%2Cneeds_id` to include them.
 
-### Build Lesson #31: Rarity Status Cross-Reference (Flora v3.021)
+**3. NAME_ALIASES not checked in isO()** (fixed v3.022): Reclassified taxa (Cupressus→Hesperocyparis) return old names from iNat. Fix: reverse-lookup NAME_ALIASES in `isO()`. Add aliases for all reclassified genera: Cupressus→Hesperocyparis (5 species), and any others discovered.
+
+**Backport to all guides**: Add `quality_grade` param and ensure `isO()` checks NAME_ALIASES.
+
+### Build Lesson #31: Rarity Status Cross-Reference (Flora v3.022)
 Status reflects LA County field encounter frequency, not range-wide abundance. CNPS rank mapping: 1B→endangered/rare, 2→rare, 3→uncommon, 4→uncommon+note, Federal E/T→endangered. Non-native planted trees: `uncommon` not `rare`. Confusable species pairs (e.g., two junipers at different elevations) need vs notes.
 
 ### Build Lesson #19: Badge Layout on Photo Cards
