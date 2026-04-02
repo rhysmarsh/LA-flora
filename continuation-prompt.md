@@ -5,7 +5,7 @@
 I'm building a suite of self-contained PWA field guides to the natural history of Los Angeles County. Four guides are live; more are planned. All share the same architecture, branding, and iNat API integration pattern. This prompt provides the context needed to:
 
 1. **Maintain and expand existing guides** — la-flora.org, labugs.org, lafungi.org, la-fauna.org
-2. **Create new guides** (planned: lamarine.org, labirds.org) using the Plant Guide as template
+2. **Create new guides** (planned: lamarine.org) using the Plant Guide as template
 3. **Cross-link ecosystem** spanning 4 guide domains + All About Birds (allaboutbirds.org)
 4. **Sync features** across all guides — elevation filter, IDB offline, cross-guide nav bar, badge layout
 
@@ -219,11 +219,11 @@ The `isopods` group key (retained for backward compat) is labeled "Crustaceans" 
 
 ## Guide 2: LA County Plant, Moss & Lichen Field Guide (la-flora.org)
 
-**Status**: v3.026 — deploy-ready, elevation filter, IndexedDB offline, cross-guide nav bar, full rarity audit, iNat life list taxon ID fix
-**Species**: 1,485 across 10 taxa groups (555 wildflowers, 108 trees, 375 shrubs, 162 grasses, 46 ferns, 35 cacti, 16 vines, 34 aquatic, 26 mosses, 128 lichens)
+**Status**: v3.027 — deploy-ready, elevation filter, IndexedDB offline, cross-guide nav bar, full rarity audit, iNat life list taxon ID fix
+**Species**: 1,485 across 10 taxa groups (558 wildflowers, 108 trees, 372 shrubs, 162 grasses, 46 ferns, 35 cacti, 16 vines, 34 aquatic, 26 mosses, 128 lichens)
 **Architecture**: v3 two-file (index.html 90 KB + species-data.json 1,082 KB)
 **IDB name**: `plantGuidePhotos` (photos), `floraOffline` (species data)
-**SW cache**: `la-plant-guide-v3.026`
+**SW cache**: `la-plant-guide-v3.027`
 **GitHub**: https://github.com/rhysmarsh/LA-flora
 **License**: GPL v3 + disclaimer
 
@@ -482,13 +482,6 @@ CaliforniaHerps.com (Gary Nafis), Stebbins & McGinnis *Western Reptiles and Amph
 | v3.005 | 252 | Badge-col, IDB offline, fetchLL pagination, ?search= |
 
 ## Future Guides (lower priority)
-
-### LA County Bird Guide
-- URL: labirds.org | iNat: 3 (Aves) | ~450+ species
-- Unique: seasonal abundance bars, eBird hotspot integration, song playback links
-- Schema: `migration: 'resident|winter|summer|passage|vagrant'`
-- Filter slot: migratory status
-- Massive species count — will push file size limits of single-file architecture
 
 ### LA County Marine Guide
 - URL: lamarine.org | iNat: various
@@ -916,14 +909,14 @@ Elevation filter with toggle chips. **CRITICAL: ALL count pipelines (rTB, rLL, r
 iOS Safari evicts SW caches after ~7 days. Fix: three-tier fallback in `loadSpeciesData()`: (1) network fetch → save to IDB, (2) CacheStorage, (3) IndexedDB. IDB name is guide-specific (`floraOffline`, `fungiOffline`). Backport to all guides.
 ### Build Lesson #31: Rarity Status Cross-Reference (Flora v3.022)
 Status reflects LA County field encounter frequency, not range-wide abundance. CNPS rank mapping: 1B→endangered/rare, 2→rare, 3→uncommon, 4→uncommon+note, Federal E/T→endangered. Non-native planted trees: `uncommon` not `rare`. Confusable species pairs (e.g., two junipers at different elevations) need vs notes.
-### Build Lesson #32: fetchLL — Pagination + NAME_ALIASES + Correct iNatTaxonId (Flora v3.026)
+### Build Lesson #32: fetchLL — Pagination + NAME_ALIASES + Correct iNatTaxonId (Flora v3.027)
 Multiple issues caused missing "seen" marks in the iNat life list:
 
 **1. No pagination** (fixed v3.021): `species_counts` returns max 500 per page. Fix: while loop with `page` param.
 
 **2. NAME_ALIASES not checked in isO()** (fixed v3.022): Reclassified taxa (Cupressus→Hesperocyparis) return old names from iNat. Fix: reverse-lookup NAME_ALIASES in `isO()`.
 
-**3. Wrong iNatTaxonId** (fixed v3.026 — **CRITICAL**): TAXA config used `47125` (Angiospermae = flowering plants only) instead of `47126` (Plantae = all plants). This silently excluded ALL conifers (pines, cypresses, junipers, cedars, firs, redwoods) from life list matching. Fix: `"iNatTaxonId":47126` for all plant groups.
+**3. Wrong iNatTaxonId** (fixed v3.027 — **CRITICAL**): TAXA config used `47125` (Angiospermae = flowering plants only) instead of `47126` (Plantae = all plants). This silently excluded ALL conifers (pines, cypresses, junipers, cedars, firs, redwoods) from life list matching. Fix: `"iNatTaxonId":47126` for all plant groups.
 
 **API URL**: `&captive=false&verifiable=true` — no `quality_grade` param needed (`verifiable=true` already includes both research and needs_id).
 
