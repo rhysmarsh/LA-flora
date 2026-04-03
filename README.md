@@ -72,7 +72,7 @@ Ecological associations contain clickable links to companion field guides. GROUP
 v3 two-file PWA architecture:
 
 ```
-index.html          — 91 KB (CSS + JS + config, no framework)
+index.html          — 92 KB (CSS + JS + config, no framework)
 species-data.json   — 1,070 KB (species data, loaded async)
 sw.js               — 1 KB (service worker, network-first + cache-fallback)
 manifest.json       — PWA manifest

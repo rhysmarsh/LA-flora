@@ -184,7 +184,7 @@ For taxa that overlap between guides (e.g., lichens in both flora and fungi), ad
 
 ## Guide 1: LA County Invertebrate Field Guide (labugs.org)
 
-**Status**: v3.028 — deploy-ready, all checks passed, elevation filter, IndexedDB offline, cross-guide nav bar, full rarity audit
+**Status**: v3.032 — deploy-ready, all checks passed, elevation filter, IndexedDB offline, cross-guide nav bar, full rarity audit
 **Species**: 3,438 (3,433 main + 5 ssp) across 15 taxa groups
 **Architecture**: Multi-file split (index.html 78 KB + 15 data/*.json files ≈ 1,880 KB total)
 **IDB name**: `invertGuidePhotos` (photos), `invertOffline` (species data)
@@ -219,11 +219,11 @@ The `isopods` group key (retained for backward compat) is labeled "Crustaceans" 
 
 ## Guide 2: LA County Plant, Moss & Lichen Field Guide (la-flora.org)
 
-**Status**: v3.027 — deploy-ready, elevation filter, IndexedDB offline, cross-guide nav bar, full rarity audit, iNat life list taxon ID fix
-**Species**: 1,485 across 10 taxa groups (558 wildflowers, 108 trees, 372 shrubs, 162 grasses, 46 ferns, 35 cacti, 16 vines, 34 aquatic, 26 mosses, 128 lichens)
+**Status**: v3.026 — deploy-ready, elevation filter, IndexedDB offline, cross-guide nav bar, full rarity audit, iNat life list taxon ID fix
+**Species**: 1,485 across 10 taxa groups (700 wildflowers, 109 trees, 224 shrubs, 162 grasses, 46 ferns, 35 cacti, 21 vines, 34 aquatic, 26 mosses, 128 lichens)
 **Architecture**: v3 two-file (index.html 90 KB + species-data.json 1,082 KB)
 **IDB name**: `plantGuidePhotos` (photos), `floraOffline` (species data)
-**SW cache**: `la-plant-guide-v3.027`
+**SW cache**: `la-plant-guide-v3.026`
 **GitHub**: https://github.com/rhysmarsh/LA-flora
 **License**: GPL v3 + disclaimer
 
@@ -560,7 +560,7 @@ Hinton *Seashore Life of Southern California* (1987), Gotshall *Guide to Marine 
 3. Find/replace: guide name, IDB name, SW cache name, canonical URL, OG tags, GitHub URL
 4. Replace SPECIES_DATA with new taxa
 5. Replace TAXA object with new taxa groups (emoji, label, iNatTaxonId, familyColors)
-   **CRITICAL**: Verify each `iNatTaxonId` is the correct taxonomic level on iNat (visit `inaturalist.org/taxa/NNNNN` to check). Using a too-narrow taxon excludes entire clades from life list matching. Example: 47125=Angiospermae excludes conifers; 47126=Plantae includes all plants.
+   **CRITICAL**: Use class/order-level taxon IDs — NOT kingdom. The iNat species_counts API returns 0 for kingdom-level queries (e.g., 47126=Plantae). Use 47125 (Angiospermae) + supplementary SUPP queries for conifers (136329=Pinopsida) and lycophytes (47604). Visit `inaturalist.org/taxa/NNNNN` to verify each ID.
 6. Replace TAXA_ORDER array
 7. Update APG_ORDER for the relevant taxonomic scope
 8. Adjust idMap for iNat life list taxon ID deduplication
@@ -646,7 +646,7 @@ To create a guide for a different county, state, or bioregion (e.g., "Bay Area P
 - [ ] **All ssp entries have parent** — same binomial prefix, same taxa group
 - [ ] **All families in TAXA familyColors AND APG_ORDER** — missing families cause gray #999 default
 - [ ] **NAME_ALIASES includes all old binomials** after taxonomy updates
-- [ ] **iNatTaxonId is correct taxonomic level** — 47126 (Plantae) not 47125 (Angiospermae); 47158 (Arthropoda) not narrower; verify for each guide
+- [ ] **iNatTaxonId is class/order level** — NOT kingdom (47126 returns 0). Use 47125 (Angiospermae) + supplementary queries for conifers (136329) and lycophytes (47604). Verify each taxon_id returns results.
 - [ ] **Dynamic safety warnings** — venomous/toxic warnings not hardcoded to one species name
 - [ ] **Cross-link terms are species names, not habitat types** (Build Lesson #38)
 
@@ -909,14 +909,40 @@ Elevation filter with toggle chips. **CRITICAL: ALL count pipelines (rTB, rLL, r
 iOS Safari evicts SW caches after ~7 days. Fix: three-tier fallback in `loadSpeciesData()`: (1) network fetch → save to IDB, (2) CacheStorage, (3) IndexedDB. IDB name is guide-specific (`floraOffline`, `fungiOffline`). Backport to all guides.
 ### Build Lesson #31: Rarity Status Cross-Reference (Flora v3.022)
 Status reflects LA County field encounter frequency, not range-wide abundance. CNPS rank mapping: 1B→endangered/rare, 2→rare, 3→uncommon, 4→uncommon+note, Federal E/T→endangered. Non-native planted trees: `uncommon` not `rare`. Confusable species pairs (e.g., two junipers at different elevations) need vs notes.
-### Build Lesson #32: fetchLL — Pagination + NAME_ALIASES + Correct iNatTaxonId (Flora v3.027)
+### Build Lesson #33: iNatTaxonId — Class-Level + Supplementary Queries (Flora v3.032)
+The iNat `species_counts` API works at class/order level but **NOT at kingdom level**. Using `47126` (Plantae, kingdom) returns zero results; `47125` (Angiospermae, class) works but excludes conifers and lycophytes.
+
+**Fix**: Use proven class-level IDs + supplementary queries for missing clades, with merge logic:
+
+| Query | Taxon ID | Level | Covers | Groups |
+|---|---|---|---|---|
+| 47125 | Angiospermae | Class | Flowering plants | wildflowers, trees, shrubs, cacti, vines, aquatic |
+| 47162 | Poales | Order | Grasses, sedges | grasses |
+| 121943 | Polypodiopsida | Class | True ferns | ferns |
+| **136329** | **Pinopsida** | Class | **Conifers** | trees, shrubs |
+| **47604** | **Lycopodiopsida** | Class | **Lycophytes** | ferns |
+| 311295 | Bryopsida | Class | Mosses | mosses |
+| 54743 | — | — | Lichens | lichens |
+
+**Merge pattern** — supplementary results ADD to existing Sets, never overwrite:
+```javascript
+const SUPP = [{tid:136329, groups:['trees','shrubs']}, {tid:47604, groups:['ferns']}];
+// In fetchTaxon result handler:
+if(!res[k]) res[k] = {ids: new Set(), names: new Set()};
+for(const id of ids) res[k].ids.add(id);
+for(const n of names) res[k].names.add(n);
+```
+
+**Rule**: Never use kingdom-level taxon IDs with iNat species_counts. Use the narrowest class/order that covers the group, plus supplementary queries for sibling clades.
+
+### Build Lesson #32: fetchLL — Pagination + NAME_ALIASES + Correct iNatTaxonId (Flora v3.026)
 Multiple issues caused missing "seen" marks in the iNat life list:
 
 **1. No pagination** (fixed v3.021): `species_counts` returns max 500 per page. Fix: while loop with `page` param.
 
 **2. NAME_ALIASES not checked in isO()** (fixed v3.022): Reclassified taxa (Cupressus→Hesperocyparis) return old names from iNat. Fix: reverse-lookup NAME_ALIASES in `isO()`.
 
-**3. Wrong iNatTaxonId** (fixed v3.027 — **CRITICAL**): TAXA config used `47125` (Angiospermae = flowering plants only) instead of `47126` (Plantae = all plants). This silently excluded ALL conifers (pines, cypresses, junipers, cedars, firs, redwoods) from life list matching. Fix: `"iNatTaxonId":47126` for all plant groups.
+**3. Wrong iNatTaxonId** (fixed v3.026 — **CRITICAL**): TAXA config used `47125` (Angiospermae = flowering plants only) instead of `47126` (Plantae = all plants). This silently excluded ALL conifers (pines, cypresses, junipers, cedars, firs, redwoods) from life list matching. Fix: `"iNatTaxonId":47126` for all plant groups.
 
 **API URL**: `&captive=false&verifiable=true` — no `quality_grade` param needed (`verifiable=true` already includes both research and needs_id).
 
