@@ -12,6 +12,7 @@ A free, open-source progressive web app (PWA) field guide to **1,485 plants, mos
 - **Photo caching** — photos fetched from iNat API and cached in IndexedDB for fast loading
 - **Offline-capable** — service worker caches all files for offline use
 - **100% ecological association notes** — every species has a unique species-specific ecological note with named wildlife species, fire ecology, indigenous ethnobotany, and sourced extraordinary claims
+- **10 endangered species** verified against CNPS Rare Plant Inventory and federal listings
 - **160 look-alike differentiation notes** — Jepson eFlora diagnostic keys for confusable species pairs, including all safety-critical toxic species
 - **Cross-linked ecosystem** — 199 deep links connecting plants to companion guides for bugs, birds, and mammals, with target taxa group routing
 - **Elevation filter** — toggle Coast / Lowland / Foothill / Mid-elevation / Mountain
@@ -168,7 +169,7 @@ Species data verified against iNaturalist research-grade observations (LA County
 ## Related Guides
 
 Part of the LA County Field Guide Suite:
-- **[labugs.org](https://labugs.org)** — Invertebrate Field Guide (3,439 species)
+- **[labugs.org](https://labugs.org)** — Invertebrate Field Guide (3,438 species)
 - **[lafungi.org](https://lafungi.org)** — Fungi Field Guide (724 species)
 - **[la-fauna.org](https://la-fauna.org)** — Vertebrate Field Guide (planned)
 
